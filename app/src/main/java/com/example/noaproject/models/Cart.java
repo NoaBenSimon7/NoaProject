@@ -1,4 +1,4 @@
-package com.example.noaproject.model;
+package com.example.noaproject.models;
 
 
 

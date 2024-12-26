@@ -1,4 +1,4 @@
-package com.example.noaproject.model;
+package com.example.noaproject.models;
 
 public class User {
 
@@ -16,6 +16,7 @@ public class User {
         this.password = password;
         this.city = city;
     }
+
 
     public User() {
     }

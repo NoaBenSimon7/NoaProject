@@ -15,6 +15,8 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.example.noaproject.services.AuthenticationService;
+import com.example.noaproject.services.DatabaseService;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -28,9 +30,9 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
     EditText etEmail, etPassword;
     Button btnLog;
     String email, pass;
-    FirebaseDatabase database;
-    DatabaseReference myRef;
-    private FirebaseAuth mAuth;
+    AuthenticationService authenticationService;
+    DatabaseService databaseService;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +44,10 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+        /// get the instance of the authentication service
+        authenticationService = AuthenticationService.getInstance();
+        /// get the instance of the database service
+        databaseService = DatabaseService.getInstance();
 
         initViews();
     }
@@ -51,9 +57,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
         etPassword = findViewById(R.id.etPasswordlOG);
         btnLog = findViewById(R.id.btnSubmitLog);
         btnLog.setOnClickListener(this);
-        mAuth = FirebaseAuth.getInstance();
-        database = FirebaseDatabase.getInstance();
-        myRef = database.getReference("Users");
+
     }
 
     @Override
