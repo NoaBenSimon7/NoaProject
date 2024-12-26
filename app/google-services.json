@@ -1,0 +1,49 @@
+{
+  "project_info": {
+    "project_number": "37081211718",
+    "firebase_url": "https://myonlineshop22-98d4f-default-rtdb.firebaseio.com",
+    "project_id": "myonlineshop22-98d4f",
+    "storage_bucket": "myonlineshop22-98d4f.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:37081211718:android:7e08c645f441f9fb4a7b47",
+        "android_client_info": {
+          "package_name": "com.example.myonlineshop"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCscuD1jKXUzVuoqGH4pVFPVW_v_N0X6kY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:37081211718:android:bb3d6bb6990594514a7b47",
+        "android_client_info": {
+          "package_name": "com.example.noaproject"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCscuD1jKXUzVuoqGH4pVFPVW_v_N0X6kY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="cityArr">
+        <item>ראשון לציון</item>
+        <item>חולון</item>
+        <item>בת ים</item>
+        <item>תל אביב</item>
+        <item>ירושלים</item>
+        <item>כפר סבא</item>
+        <item>באר שבע</item>
+        <item>אילת</item>
+        <item>הוד השרון</item>
+        <item>רמת גן</item>
+    </string-array>
+
+    <string-array name="typeArr">
+        <item>חולצות טי</item>
+        <item>טופים</item>
+        <item>סווטשירט</item>
+        <item>ג/ינס</item>
+        <item>סריגים</item>
+        <item>פיג/מות</item>
+        <item>נעליים</item>
+    </string-array>
+
+    <string-array name="sizeArr">
+        <item>XS</item>
+        <item>S</item>
+        <item>M</item>
+        <item>L</item>
+        <item>XL</item>
+        <item>XXL</item>
+    </string-array>
+
+    <string-array name="fabricArr">
+        <item>צמר</item>
+        <item>כותנה</item>
+        <item>פשתן</item>
+        <item>עור</item>
+        <item>משי</item>
+        <item>לייקרה</item>
+        <item>קטיפה</item>
+    </string-array>
+
+
+    <string-array name="colorArr">
+        <item>שחור</item>
+        <item>לבן</item>
+        <item>אפור</item>
+        <item>חום</item>
+        <item>בז</item>
+        <item>כחול נייבי</item>
+    </string-array>
+
+</resources>
