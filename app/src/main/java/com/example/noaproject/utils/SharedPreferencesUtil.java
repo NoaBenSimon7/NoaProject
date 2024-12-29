@@ -109,7 +109,7 @@ public class SharedPreferencesUtil {
         editor.putString("fName", user.getFname());
         editor.putString("lName", user.getLname());
         editor.putString("phone", user.getPhone());
-        editor.putString("city", user.getCity());
+
         editor.apply();
     }
 
@@ -132,7 +132,7 @@ public class SharedPreferencesUtil {
         String phone = sharedPreferences.getString("phone", "");
         String city = sharedPreferences.getString("city", "");
 
-        return new User(uid,fName,lName, email,phone,password, city);
+        return new User(uid,fName,lName, email,phone,password);
     }
 
     /// Sign out the user by removing user data from shared preferences

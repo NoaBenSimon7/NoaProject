@@ -1,4 +1,4 @@
-package com.example.noaproject;
+package com.example.noaproject.screens;
 
 import android.content.Context;
 import android.content.Intent;
@@ -19,6 +19,7 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.example.noaproject.R;
 import com.example.noaproject.models.User;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -28,7 +29,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-public class Register extends AppCompatActivity implements View.OnClickListener,  AdapterView.OnItemSelectedListener {
+public class Register extends AppCompatActivity implements View.OnClickListener {
 
     EditText etFName, etLName, etPhone, etEmail, etPass;
     Button btnReg;
@@ -40,8 +41,6 @@ public class Register extends AppCompatActivity implements View.OnClickListener,
     public static final String MyPREFERENCES = "MyPrefs" ;
     SharedPreferences sharedpreferences;
 
-    String city;
-    Spinner spCity;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,9 +74,9 @@ public class Register extends AppCompatActivity implements View.OnClickListener,
         etPhone=findViewById(R.id.etPhone);
         etEmail=findViewById(R.id.etEmail);
         etPass=findViewById(R.id.etPassword);
-        spCity=findViewById(R.id.spCity);
+
         btnReg.setOnClickListener(this);
-        spCity.setOnItemSelectedListener(this);
+
     }
 
     @Override
@@ -126,7 +125,7 @@ public class Register extends AppCompatActivity implements View.OnClickListener,
                                 // Sign in success, update UI with the signed-in user's information
                                 Log.d("TAG", "createUserWithEmail:success");
                                 FirebaseUser fireuser = mAuth.getCurrentUser();
-                                User newUser=new User(fireuser.getUid(), fName, lName,phone,  email, pass,city);
+                                User newUser=new User(fireuser.getUid(), fName, lName,phone,  email, pass);
                                 myRef.child(fireuser.getUid()).setValue(newUser);
                                 SharedPreferences.Editor editor = sharedpreferences.edit();
 
@@ -158,14 +157,5 @@ public class Register extends AppCompatActivity implements View.OnClickListener,
         super.onPointerCaptureChanged(hasCapture);
     }
 
-    @Override
-    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-        city= (String) adapterView.getItemAtPosition(i);
 
-    }
-
-    @Override
-    public void onNothingSelected(AdapterView<?> adapterView) {
-
-    }
 }

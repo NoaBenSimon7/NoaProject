@@ -3,18 +3,18 @@ package com.example.noaproject.models;
 public class User {
 
 
-    protected String id,fname,lname, email,phone,password,city;
+    protected String id,fname,lname, email,phone,password;
 
 
 
-    public User(String id, String fname, String lname, String email, String phone, String password, String city) {
+    public User(String id, String fname, String lname, String email, String phone, String password) {
         this.id = id;
         this.fname = fname;
         this.lname = lname;
         this.email = email;
         this.phone = phone;
         this.password = password;
-        this.city = city;
+
     }
 
 
@@ -66,13 +66,7 @@ public class User {
         return password;
     }
 
-    public String getCity() {
-        return city;
-    }
 
-    public void setCity(String city) {
-        this.city = city;
-    }
 
     public void setPassword(String password) {
         this.password = password;
@@ -87,7 +81,7 @@ public class User {
                 ", email='" + email + '\'' +
                 ", phone='" + phone + '\'' +
                 ", password='" + password + '\'' +
-                ", city='" + city + '\'' +
+
                 '}';
     }
 }
