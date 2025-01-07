@@ -57,4 +57,4 @@ public class ImageUtil {
         return BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
     }
 }
-}
+

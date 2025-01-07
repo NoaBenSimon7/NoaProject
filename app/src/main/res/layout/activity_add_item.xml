@@ -8,95 +8,158 @@
     tools:context=".screens.AddItem">
 
 
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="180dp"
+        android:layout_height="41dp"
+        android:layout_marginStart="38dp"
+        android:layout_marginTop="39dp"
+        android:layout_marginEnd="34dp"
+        android:layout_marginBottom="415dp"
+        android:text="הוספת פריט"
+        app:layout_constraintBottom_toTopOf="@+id/ivD"
+        app:layout_constraintEnd_toEndOf="@+id/etItemName"
+        app:layout_constraintStart_toStartOf="@+id/spItemType"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <EditText
-        android:id="@+id/etName2"
+        android:id="@+id/etItemName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="25dp"
+        android:layout_marginBottom="37dp"
         android:ems="10"
         android:inputType="text"
         android:text="Name"
-        tools:layout_editor_absoluteX="89dp"
-        tools:layout_editor_absoluteY="41dp" />
+        app:layout_constraintBottom_toTopOf="@+id/spItemType"
+        app:layout_constraintEnd_toEndOf="@+id/spItemType"
+        app:layout_constraintTop_toBottomOf="@+id/textView3" />
 
     <Spinner
-        android:id="@+id/spType"
-        android:layout_width="273dp"
-        android:layout_height="32dp"
+        android:id="@+id/spItemType"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="25dp"
         android:entries="@array/typeArr"
-        tools:layout_editor_absoluteX="67dp"
-        tools:layout_editor_absoluteY="127dp" />
+        app:layout_constraintBottom_toTopOf="@+id/spItemSize"
+        app:layout_constraintEnd_toEndOf="@+id/spItemColor"
+        app:layout_constraintStart_toStartOf="@+id/spItemSize"
+        app:layout_constraintTop_toBottomOf="@+id/etItemName" />
 
     <Spinner
-        android:id="@+id/spSize"
-        android:layout_width="272dp"
-        android:layout_height="33dp"
+        android:id="@+id/spItemSize"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="1dp"
+        android:layout_marginEnd="1dp"
+        android:layout_marginBottom="23dp"
         android:entries="@array/sizeArr"
-        tools:layout_editor_absoluteX="71dp"
-        tools:layout_editor_absoluteY="185dp" />
+        app:layout_constraintBottom_toTopOf="@+id/spItemFabric"
+        app:layout_constraintEnd_toEndOf="@+id/spItemColor"
+        app:layout_constraintStart_toStartOf="@+id/spItemColor"
+        app:layout_constraintTop_toBottomOf="@+id/spItemType" />
 
     <Spinner
-        android:id="@+id/spFabric"
-        android:layout_width="273dp"
-        android:layout_height="33dp"
+        android:id="@+id/spItemFabric"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="14dp"
         android:entries="@array/fabricArr"
-        tools:layout_editor_absoluteX="70dp"
-        tools:layout_editor_absoluteY="236dp" />
+        app:layout_constraintBottom_toTopOf="@+id/spItemColor"
+        app:layout_constraintEnd_toEndOf="@+id/spItemSize"
+        app:layout_constraintStart_toStartOf="@+id/spItemColor"
+        app:layout_constraintTop_toBottomOf="@+id/spItemSize" />
 
 
     <Spinner
-        android:id="@+id/spColor"
-        android:layout_width="274dp"
-        android:layout_height="33dp"
+        android:id="@+id/spItemColor"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="54dp"
+        android:layout_marginEnd="53dp"
+        android:layout_marginBottom="27dp"
         android:entries="@array/colorArr"
-        tools:layout_editor_absoluteX="71dp"
-        tools:layout_editor_absoluteY="287dp" />
-
-
-    <Button
-        android:id="@+id/btnAddCart"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="הוספה לסל"
-        tools:layout_editor_absoluteX="147dp"
-        tools:layout_editor_absoluteY="625dp" />
+        app:layout_constraintBottom_toTopOf="@+id/etItemPrice"
+        app:layout_constraintEnd_toEndOf="@+id/ivD"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/spItemFabric" />
 
     <Button
         android:id="@+id/btnGalleryD"
-        android:layout_width="170dp"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:backgroundTint="#EADD6F"
 
+        android:layout_marginStart="26dp"
+        android:layout_marginEnd="25dp"
+        android:layout_marginBottom="5dp"
+        android:backgroundTint="#EADD6F"
         android:gravity="center"
         android:shadowRadius="5"
         android:text="גלריה"
         android:textColor="@color/black"
         android:textSize="20sp"
         android:textStyle="bold"
-        tools:layout_editor_absoluteX="123dp"
-        tools:layout_editor_absoluteY="495dp" />
+        app:layout_constraintBottom_toTopOf="@+id/btnTakePicD"
+        app:layout_constraintEnd_toStartOf="@+id/ivD"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/etItemPrice" />
 
     <Button
         android:id="@+id/btnTakePicD"
-        android:layout_width="170dp"
-        android:layout_height="51dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:layout_gravity="center"
-        android:backgroundTint="#EADD6F"
 
+        android:layout_marginStart="26dp"
+        android:layout_marginEnd="25dp"
+        android:layout_marginBottom="52dp"
+        android:backgroundTint="#EADD6F"
         android:gravity="center"
         android:shadowRadius="5"
         android:text="מצלמה"
         android:textColor="@color/black"
         android:textSize="20sp"
         android:textStyle="bold"
-        tools:layout_editor_absoluteX="120dp"
-        tools:layout_editor_absoluteY="543dp" />
+        app:layout_constraintBottom_toTopOf="@+id/btnAddItem"
+        app:layout_constraintEnd_toStartOf="@+id/ivD"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnGalleryD" />
 
     <ImageView
         android:id="@+id/ivD"
-        android:layout_width="190dp"
-        android:layout_height="123dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginEnd="30dp"
+        android:layout_marginBottom="143dp"
         android:layout_weight="1"
-        tools:layout_editor_absoluteX="109dp"
-        tools:layout_editor_absoluteY="346dp" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/btnTakePicD"
+        app:layout_constraintTop_toBottomOf="@+id/textView3" />
+
+    <Button
+        android:id="@+id/btnAddItem"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="43dp"
+        android:text="הוספה"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/spItemColor"
+        app:layout_constraintStart_toStartOf="@+id/spItemColor"
+        app:layout_constraintTop_toBottomOf="@+id/btnTakePicD" />
+
+    <EditText
+        android:id="@+id/etItemPrice"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginBottom="30dp"
+        android:ems="10"
+        android:inputType="number"
+        app:layout_constraintBottom_toTopOf="@+id/btnGalleryD"
+        app:layout_constraintStart_toStartOf="@+id/spItemColor"
+        app:layout_constraintTop_toBottomOf="@+id/spItemColor" />
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>

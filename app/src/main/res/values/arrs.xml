@@ -1,17 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string-array name="cityArr">
-        <item>ראשון לציון</item>
-        <item>חולון</item>
-        <item>בת ים</item>
-        <item>תל אביב</item>
-        <item>ירושלים</item>
-        <item>כפר סבא</item>
-        <item>באר שבע</item>
-        <item>אילת</item>
-        <item>הוד השרון</item>
-        <item>רמת גן</item>
-    </string-array>
 
     <string-array name="typeArr">
         <item>חולצות טי</item>
