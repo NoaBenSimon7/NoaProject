@@ -8,7 +8,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
+import android.provider.MediaStore;
+
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -17,17 +20,27 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.example.noaproject.R;
+import com.example.noaproject.models.Item;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+
 public class AddItem extends AppCompatActivity implements View.OnClickListener {
-    EditText etItemName ,etPrice;
-    Button btnAddItem, btnTakePicD, btnGalleryD;
-    Spinner  spType,spSize,spFabric,spColor;
+
+    private static final int GALLERY_INTENT = 1;  // הגדרת קוד הבקשה לגישה לגלריה
+    private static final int CAMERA_INTENT = 0;   // הגדרת קוד הבקשה לצילום
+
+    EditText etItemName, etItemPrice;
+    Spinner spItemType, spItemSize,spItemFabric,spItemColor;
+    Button btnGalleryD,btnTakePicD,btnAddItem;
     ImageView ivD;
 
-    String type,size, fabric, color, name;
+
+    String imageRef;
+    String dedc;
+    String itemName, stPrice, type;
+    int price;
 
     private FirebaseDatabase database;
     private DatabaseReference myRef;
@@ -58,10 +71,10 @@ public class AddItem extends AppCompatActivity implements View.OnClickListener {
         ivD=findViewById(R.id.ivD);
 
 
-        spType=findViewById(R.id.spItemType);
+        spItemType=findViewById(R.id.spItemType);
 
         etItemName=findViewById(R.id.etItemName);
-        etPrice=findViewById(R.id.etItemPrice);
+        etItemPrice=findViewById(R.id.etItemPrice);
 
     }
 
@@ -87,25 +100,24 @@ public class AddItem extends AppCompatActivity implements View.OnClickListener {
 
 
 
-        type=spType.getSelectedItem().toString();
+        type=spItemType.getSelectedItem().toString();
 
 
 
         itemName=etItemName.getText()+"";
 
-        stPrice=etPrice.getText().toString();
+        stPrice=etItemPrice.getText().toString();
 
-        etPrice=Integer.parseInt(stPrice);
+        etItemPrice=Integer.parseInt(stPrice);
 
         if (bitmap != null) {
 
             //  uid ="thisisUid"; //FirebaseAuth.getInstance().getCurrentUser().getUid();
 
             String itemid=myRef.getKey().toString();
-            imageRef="gs://macroorder-508b4.appspot.com/"+itemid;
 
-            Item newItem= new Item(itemid,itemName,type,imageRef, dedc,price);
-
+            Item newItem;
+            newItem = new Item(itemName,type,imageRef, dedc,price);
 
 
             //  item1.setImageRef("gs://who-needed.appspot.com\n"+item1.getItemKey()+"");
@@ -136,7 +148,7 @@ public class AddItem extends AppCompatActivity implements View.OnClickListener {
         {
             if (resultCode == RESULT_OK) {
                 bitmap = (Bitmap) data.getExtras().get("data");
-                iv.setImageBitmap(bitmap);
+                ivD.setImageBitmap(bitmap);
             }
         }
 
@@ -146,7 +158,7 @@ public class AddItem extends AppCompatActivity implements View.OnClickListener {
             try {
                 bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), uri);
                 // Log.d(TAG, String.valueOf(bitmap));
-                iv.setImageBitmap(bitmap);
+                ivD.setImageBitmap(bitmap);
 
 
             } catch (IOException e) {
@@ -167,6 +179,7 @@ public class AddItem extends AppCompatActivity implements View.OnClickListener {
         }
 
         if(id==R.id.menuGoPersonal){
+
             Intent go=new Intent(this,UserProfile.class);
 
             // go.putExtra("nameList",listNames);
@@ -175,7 +188,7 @@ public class AddItem extends AppCompatActivity implements View.OnClickListener {
         }
 
         if(id==R.id.menuGoMyCart) {
-            Intent go=new Intent(this,Mycart.class);
+            Intent go=new Intent(this,MyCart.class);
 
             startActivity(go);
 
@@ -270,22 +283,4 @@ public class AddItem extends AppCompatActivity implements View.OnClickListener {
 
 
 
-            spType= findViewById(R.id.spItemType);
-       spSize= findViewById(R.id.spItemSize);
-       spFabric= findViewById(R.id.spItemFabric);
-       spColor=findViewById(R.id.spItemColor);
 
-
-
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
-            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
-            return insets;
-        }
-
-
-
-
-
-
-    }

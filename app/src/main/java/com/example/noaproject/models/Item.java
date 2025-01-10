@@ -3,20 +3,28 @@ package com.example.noaproject.models;
 import java.io.Serializable;
 
 public class Item  implements Serializable {
-    protected String id, name, type, size, color, fabric, pic;
+    protected String id, itemName, type, size, color, fabric, pic,dedc, imageRef;
     protected double price;
 
 
 
     public Item(String id, String name, String type, String size, String color, String fabric, String pic, double price) {
         this.id = id;
-        this.name = name;
+        this.itemName = name;
         this.type = type;
         this.size = size;
         this.color = color;
         this.fabric = fabric;
         this.pic = pic;
         this.price = price;
+    }
+    public Item(String itemName,String type, String imageRef, String dedc,String price){
+        this.itemName = itemName;
+        this.type = type;
+        this.imageRef = imageRef;
+        this.dedc = dedc;
+        this.price = Double.parseDouble(price);
+
     }
 
     public Item() {
