@@ -5,6 +5,7 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -16,6 +17,7 @@ import android.provider.MediaStore;
 
 
 import androidx.activity.EdgeToEdge;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
@@ -110,9 +112,8 @@ public class AddItem extends AppCompatActivity implements View.OnClickListener {
 
         itemName=etItemName.getText()+"";
 
+        etItemPrice=Double.parseDouble(stPrice);
         stPrice=etItemPrice.getText().toString();
-
-        etItemPrice=Integer.parseInt(stPrice);
 
         if (bitmap != null) {
 
@@ -123,8 +124,7 @@ public class AddItem extends AppCompatActivity implements View.OnClickListener {
             Item newItem;
             newItem = new Item(itemName,type,imageRef, dedc,price);
 
-
-            //  item1.setImageRef("gs://who-needed.appspot.com\n"+item1.getItemKey()+"");
+                //  item1.setImageRef("gs://who-needed.appspot.com\n"+item1.getItemKey()+"");
             myRef.setValue(newItem);
 
             HandleImage.LoadImageFile(bitmap, AddItem.this, itemid);
@@ -185,7 +185,7 @@ public class AddItem extends AppCompatActivity implements View.OnClickListener {
     }
 
     }
-    @Override
+   /* @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
 
         int id=item.getItemId();
@@ -230,7 +230,7 @@ public class AddItem extends AppCompatActivity implements View.OnClickListener {
 
         }
         return super.onOptionsItemSelected(item);
-    }
+    }*/
 
 //    public boolean onOptionsItemSelected(MenuItem menuitem) {
 //        int itemid = menuitem.getItemId();
