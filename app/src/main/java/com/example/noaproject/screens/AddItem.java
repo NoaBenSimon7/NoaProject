@@ -2,7 +2,9 @@ package com.example.noaproject.screens;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -24,6 +26,8 @@ import com.example.noaproject.models.Item;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+
+import java.io.IOException;
 
 
 public class AddItem extends AppCompatActivity implements View.OnClickListener {
@@ -144,28 +148,41 @@ public class AddItem extends AppCompatActivity implements View.OnClickListener {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == 0)//coming from camera
-        {
+
+        // טיפול בתוצאה מהמצלמה (requestCode == 0)
+        if (requestCode == 0) {
             if (resultCode == RESULT_OK) {
+                // אם הכל טוב, תקבל את התמונה כ-Bitmap
                 bitmap = (Bitmap) data.getExtras().get("data");
                 ivD.setImageBitmap(bitmap);
             }
         }
 
-        if(requestCode==GALLERY_INTENT && resultCode==RESULT_OK && data !=null) {
-            Uri uri = data.getData();
+        // טיפול בתוצאה מהגלריה (requestCode == GALLERY_INTENT)
+        if (requestCode == GALLERY_INTENT && resultCode == RESULT_OK && data != null) {
+            Uri uri = data.getData(); // קבלת ה-Uri מה-Intent
 
-            try {
-                bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), uri);
-                // Log.d(TAG, String.valueOf(bitmap));
-                ivD.setImageBitmap(bitmap);
+            // בדיקה אם ה-Uri לא null
+            if (uri != null) {
+                try {
+                    // ניסיון להמיר את ה-Uri ל-Bitmap
+                    bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), uri);
+                    ivD.setImageBitmap(bitmap); // הצגת התמונה ב-ImageView
 
-
-            } catch (IOException e) {
-                e.printStackTrace();
+                } catch (IOException e) {
+                    // טיפול בשגיאה במקרה של IOException
+                    Log.e("TAG", "Error loading image from Uri: " + e.getMessage());
+                    e.printStackTrace();
+                    // הצגת הודעת שגיאה למשתמש
+                    Toast.makeText(this, "Error loading image", Toast.LENGTH_SHORT).show();
+                }
+            } else {
+                // אם ה-Uri הוא null, הצג הודעה
+                Log.e("TAG", "Uri is null");
+                Toast.makeText(this, "No image selected", Toast.LENGTH_SHORT).show();
             }
-
         }
+    }
 
     }
     @Override
