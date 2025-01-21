@@ -20,8 +20,8 @@
 
     <Button
         android:id="@+id/btnReg"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="120dp"
+        android:layout_height="67dp"
         android:layout_marginStart="144dp"
         android:layout_marginTop="222dp"
         android:onClick="goReg"
@@ -31,10 +31,10 @@
 
     <Button
         android:id="@+id/btnLog"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="2dp"
-        android:layout_marginTop="22dp"
+        android:layout_width="110dp"
+        android:layout_height="68dp"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="36dp"
         android:onClick="goLogin"
         android:text="הרשמה"
         app:layout_constraintStart_toStartOf="@+id/btnReg"

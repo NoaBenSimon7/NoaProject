@@ -1,19 +1,27 @@
 package com.example.noaproject.screens;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.util.Log;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
-import android.widget.TextView;
 import android.widget.Toast;
-import android.provider.MediaStore;
+
+import androidx.activity.EdgeToEdge;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.graphics.Insets;
+import androidx.core.view.ViewCompat;
+import androidx.core.view.WindowInsetsCompat;
 
 
 import androidx.activity.EdgeToEdge;
@@ -25,279 +33,267 @@ import androidx.core.view.WindowInsetsCompat;
 
 import com.example.noaproject.R;
 import com.example.noaproject.models.Item;
+import com.example.noaproject.services.DatabaseService;
+import com.example.noaproject.utils.ImageUtil;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Map;
 
 
 public class AddItem extends AppCompatActivity implements View.OnClickListener {
 
-    private static final int GALLERY_INTENT = 1;  // הגדרת קוד הבקשה לגישה לגלריה
-    private static final int CAMERA_INTENT = 0;   // הגדרת קוד הבקשה לצילום
+    /// tag for logging
 
-    EditText etItemName, etItemPrice;
-    Spinner spItemType, spItemSize,spItemFabric,spItemColor;
-    Button btnGalleryD,btnTakePicD,btnAddItem;
-    ImageView ivD;
+    private static final String TAG = "AddItemActivity";
+    
+    private Spinner spItemType, spItemSize, spItemFabric, spItemColor;
+    private EditText etItemName, etItemPrice, etItemDesc;
+    private Button btnAddItem, btnGoGallery, btnGoCamera;
+    private ImageView ivItem;
+    private DatabaseService databaseService;
 
 
-    String imageRef;
-    String dedc;
-    String itemName, stPrice, type;
-    int price;
 
-    private FirebaseDatabase database;
-    private DatabaseReference myRef;
-    Bitmap bitmap;
+
+
+
+    /// Activity result launcher for selecting image from gallery
+    private ActivityResultLauncher<Intent> selectImageLauncher;
+    /// Activity result launcher for capturing image from camera
+    private ActivityResultLauncher<Intent> captureImageLauncher;
+
+
+    // One Preview Image
+    ImageView IVPreviewImage;
+
+    // constant to compare
+    // the activity result code
+    int SELECT_PICTURE = 200;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
+        /// set the layout for the activity
         setContentView(R.layout.activity_add_item);
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
+            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
+            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
+            return insets;
+        });
 
         initViews();
-        database= FirebaseDatabase.getInstance();
-        myRef=database.getReference("Items").push();
 
-        btnTakePicD.setOnClickListener(this);
 
-        btnAddItem.setOnClickListener(this);
-        btnGalleryD.setOnClickListener(this);
+/// request permission for the camera and storage
+        ImageUtil.requestPermission(this);
+
+        /// get the instance of the database service
+        databaseService = DatabaseService.getInstance();
 
     }
 
     private void initViews() {
-        btnAddItem=findViewById(R.id.btnAddItem);
-        btnGalleryD=findViewById(R.id.btnGalleryD);
-        btnTakePicD=findViewById(R.id.btnTakePicD);
 
-        ivD=findViewById(R.id.ivD);
-
-
+        /// get the views
+        etItemName = findViewById(R.id.etItemName);
+        etItemPrice = findViewById(R.id.etItemPrice);
+        btnAddItem = findViewById(R.id.btnAddItem);
+        ivItem = findViewById(R.id.ivD);
         spItemType=findViewById(R.id.spItemType);
+        spItemSize=findViewById(R.id.spItemSize);
+        spItemFabric=findViewById(R.id.spItemFabric);
+        spItemColor=findViewById(R.id.spItemColor);
+        btnGoCamera=findViewById(R.id.btnGalleryD);
+        btnGoGallery=findViewById(R.id.btnGalleryD);
 
-        etItemName=findViewById(R.id.etItemName);
-        etItemPrice=findViewById(R.id.etItemPrice);
+        /// set the on click listeners
+
+        btnAddItem.setOnClickListener(this);
+
+        /// register the activity result launcher for selecting image from gallery
+        selectImageLauncher = registerForActivityResult(
+                new ActivityResultContracts.StartActivityForResult(),
+                result -> {
+                    if (result.getResultCode() == RESULT_OK && result.getData() != null) {
+                        Uri selectedImage = result.getData().getData();
+                        ivItem.setImageURI(selectedImage);
+                        /// set the tag for the image view to null
+                        ivItem.setTag(null);
+                    }
+                });
+
+        /// register the activity result launcher for capturing image from camera
+        captureImageLauncher = registerForActivityResult(
+                new ActivityResultContracts.StartActivityForResult(),
+                result -> {
+                    if (result.getResultCode() == RESULT_OK && result.getData() != null) {
+                        Bitmap bitmap = (Bitmap) result.getData().getExtras().get("data");
+                        ivItem.setImageBitmap(bitmap);
+                        /// set the tag for the image view to null
+                        ivItem.setTag(null);
+                    }
+                });
+
 
     }
 
     @Override
     public void onClick(View v) {
 
-        if(v==btnTakePicD)
-        {
-            Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-            startActivityForResult(intent, 0);
-
+        if (v.getId() == btnAddItem.getId()) {
+            Log.d(TAG, "Add item button clicked");
+            addItemToDatabase();
+            return;
         }
-        if(v==btnGalleryD) {
-
-            Intent intent2=new Intent(Intent.ACTION_PICK);
-            intent2.setType("image/*");
-            startActivityForResult(intent2,GALLERY_INTENT);
-
+        if (v.getId() == btnGoGallery.getId()) {
+            // select image from gallery
+            Log.d(TAG, "Select image button clicked");
+            selectImageFromGallery();
+            return;
         }
-
-        if(v==btnAddItem)
-    {
-
-
-
-        type=spItemType.getSelectedItem().toString();
-
-
-
-        itemName=etItemName.getText()+"";
-
-        etItemPrice=Double.parseDouble(stPrice);
-        stPrice=etItemPrice.getText().toString();
-
-        if (bitmap != null) {
-
-            //  uid ="thisisUid"; //FirebaseAuth.getInstance().getCurrentUser().getUid();
-
-            String itemid=myRef.getKey().toString();
-
-            Item newItem;
-            newItem = new Item(itemName,type,imageRef, dedc,price);
-
-                //  item1.setImageRef("gs://who-needed.appspot.com\n"+item1.getItemKey()+"");
-            myRef.setValue(newItem);
-
-            HandleImage.LoadImageFile(bitmap, AddItem.this, itemid);
-            //startActivity(intent2);
-
-            Intent go=new Intent(this,AdminPage.class);
-            startActivity(go);
-
-        } else {
-            Toast.makeText(AddItem.this, "Please take pic!", Toast.LENGTH_SHORT).show();
+        if (v.getId() == btnGoCamera.getId()) {
+            // capture image from camera
+            Log.d(TAG, "Capture image button clicked");
+            captureImageFromCamera();
+            return;
         }
     }
 
+    /// add the item to the database
+    /// @see Item
+    private void addItemToDatabase() {
+        /// get the values from the input fields
+        String name = etItemName.getText().toString();
+        String priceText = etItemPrice.getText().toString();
+        String itemName = etItemName.getText().toString();
+        String type = spItemType.getSelectedItem().toString();
+        String size = spItemSize.getSelectedItem().toString();
+        String color = spItemColor.getSelectedItem().toString();
+        String fabric = spItemFabric.getSelectedItem().toString();
+        String desc= etItemDesc.getText().toString().
+        String imageRef = ImageUtil.convertTo64Base(ivItem);
 
+        /// validate the input
+        /// stop if the input is not valid
+        if (!isValid(name, priceText, imageRef)) return;
+
+        /// convert the price to double
+        double price = Double.parseDouble(priceText);
+
+        /// generate a new id for the item
+        String id = databaseService.generateItemId();
+
+        Log.d(TAG, "Adding item to database");
+        Log.d(TAG, "ID: " + id);
+        Log.d(TAG, "Name: " + name);
+        Log.d(TAG, "Price: " + price);
+        Log.d(TAG, "Image: " + imageRef);
+
+        /// create a new item object
+        Item item = new Item(id, itemName, type, size, color, fabric, imageRef, desc, price);
+
+        /// save the item to the database and get the result in the callback
+        databaseService.createNewItem(item, new DatabaseService.DatabaseCallback<Void>() {
+            @Override
+            public void onCompleted(Void object) {
+                Log.d(TAG, "Item added successfully");
+                Toast.makeText(AddItem.this, "Item added successfully", Toast.LENGTH_SHORT).show();
+                /// clear the input fields after adding the item for the next item
+                Log.d(TAG, "Clearing input fields");
+                etItemName.setText("");
+                etItemPrice.setText("");
+                IVPreviewImage.setImageBitmap(null);
+            }
+
+            @Override
+            public void onFailed(Exception e) {
+                Log.e(TAG, "Failed to add item", e);
+                Toast.makeText(AddItem.this, "Failed to add item", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
 
+    /// select image from gallery
+    private void selectImageFromGallery() {
+        //   Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        //  selectImageLauncher.launch(intent);
+
+        imageChooser();
+    }
+
+    /// capture image from camera
+    private void captureImageFromCamera() {
+        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        captureImageLauncher.launch(takePictureIntent);
+    }
 
 
+    /// validate the input
+    private boolean isValid(String name, String priceText, String imageBase64) {
+        if (name.isEmpty()) {
+            Log.e(TAG, "Name is empty");
+            etItemName.setError("Name is required");
+            etItemName.requestFocus();
+            return false;
+        }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (priceText.isEmpty()) {
+            Log.e(TAG, "Price is empty");
+            etItemPrice.setError("Price is required");
+            etItemPrice.requestFocus();
+            return false;
+        }
+
+        if (imageBase64 == null) {
+            Log.e(TAG, "Image is required");
+            Toast.makeText(this, "Image is required", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+
+        return true;
+    }
+
+    void imageChooser() {
+
+        // create an instance of the
+        // intent of the type image
+        Intent i = new Intent();
+        i.setType("image/*");
+        i.setAction(Intent.ACTION_GET_CONTENT);
+
+        // pass the constant to compare it
+        // with the returned requestCode
+        startActivityForResult(Intent.createChooser(i, "Select Picture"), SELECT_PICTURE);
+    }
+
+    // this function is triggered when user
+    // selects the image from the imageChooser
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        // טיפול בתוצאה מהמצלמה (requestCode == 0)
-        if (requestCode == 0) {
-            if (resultCode == RESULT_OK) {
-                // אם הכל טוב, תקבל את התמונה כ-Bitmap
-                bitmap = (Bitmap) data.getExtras().get("data");
-                ivD.setImageBitmap(bitmap);
-            }
-        }
+        if (resultCode == RESULT_OK) {
 
-        // טיפול בתוצאה מהגלריה (requestCode == GALLERY_INTENT)
-        if (requestCode == GALLERY_INTENT && resultCode == RESULT_OK && data != null) {
-            Uri uri = data.getData(); // קבלת ה-Uri מה-Intent
-
-            // בדיקה אם ה-Uri לא null
-            if (uri != null) {
-                try {
-                    // ניסיון להמיר את ה-Uri ל-Bitmap
-                    bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), uri);
-                    ivD.setImageBitmap(bitmap); // הצגת התמונה ב-ImageView
-
-                } catch (IOException e) {
-                    // טיפול בשגיאה במקרה של IOException
-                    Log.e("TAG", "Error loading image from Uri: " + e.getMessage());
-                    e.printStackTrace();
-                    // הצגת הודעת שגיאה למשתמש
-                    Toast.makeText(this, "Error loading image", Toast.LENGTH_SHORT).show();
+            // compare the resultCode with the
+            // SELECT_PICTURE constant
+            if (requestCode == SELECT_PICTURE) {
+                // Get the url of the image from data
+                Uri selectedImageUri = data.getData();
+                if (null != selectedImageUri) {
+                    // update the preview image in the layout
+                    IVPreviewImage.setImageURI(selectedImageUri);
                 }
-            } else {
-                // אם ה-Uri הוא null, הצג הודעה
-                Log.e("TAG", "Uri is null");
-                Toast.makeText(this, "No image selected", Toast.LENGTH_SHORT).show();
             }
         }
     }
-
-    }
-   /* @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-
-        int id=item.getItemId();
-        if(id==R.id.menuGoStore){
-            Intent go=new Intent(this,AfterLogin.class);
-            startActivity(go);
-
-        }
-
-        if(id==R.id.menuGoPersonal){
-
-            Intent go=new Intent(this,UserProfile.class);
-
-            // go.putExtra("nameList",listNames);
-            startActivity(go);
-
-        }
-
-        if(id==R.id.menuGoMyCart) {
-            Intent go=new Intent(this,MyCart.class);
-
-            startActivity(go);
-
-
-        }
-        if(id==R.id.menuGoAboutUs) {
-            Intent go=new Intent(this,AboutUs.class);
-
-            startActivity(go);
-
-
-        }
-
-        if(id==R.id.menuGoAfterLogin){
-            Intent go=new Intent(this,AfterLogin.class);
-            startActivity(go);
-
-        }
-        if(id==R.id.menuGoAllOrders){
-            Intent go=new Intent(this,AllOrders.class);
-            startActivity(go);
-
-        }
-        return super.onOptionsItemSelected(item);
-    }*/
-
-//    public boolean onOptionsItemSelected(MenuItem menuitem) {
-//        int itemid = menuitem.getItemId();
-//        if (itemid == R.id.menuGoStore) {
-//            Intent goadmin = new Intent(AddItem.this, SearchItem.class);
-//            startActivity(goadmin);
-//        }
-//        if (itemid == R.id.menuGoAddItem) {
-//            Intent goadmin = new Intent(AddItem.this, AddItem.class);
-//            startActivity(goadmin);
-//        }
-//        if (itemid == R.id.menuGoWishList) {
-//            Intent goadmin = new Intent(AddItem.this, WishList.class);
-//            startActivity(goadmin);
-//        }
-//        if (itemid == R.id.menuGoPersonal) {
-//             Intent goadmin = new Intent(AddItem.this, UserProfile.class);
-//             startActivity(goadmin);
-//        }
-//        if (itemid == R.id.menuGoAboutUs) {
-//            Intent goadmin = new Intent(AddItem.this, AboutUs.class);
-//            startActivity(goadmin);
-//        }
-//        if (itemid == R.id.menuGoAfterLogin) {
-//            Intent goadmin = new Intent(AddItem.this, AfterLogin.class);
-//            startActivity(goadmin);
-//        }
-//        if (itemid == R.id.menuGoAdminPage) {
-//            String admin = "edenkario@gmail.com";
-//            if(FirebaseAuth.getInstance().getCurrentUser().getEmail().equals(admin)){
-//                Intent go = new Intent(AddItem.this, AdminPage.class);
-//                startActivity(go);
-//            }
-//            else{
-//                Toast.makeText(AddItem.this,"עמוד זה למנהלים בלבד!", Toast.LENGTH_LONG).show();
-//            }
-//        }
-//
-//        return super.onOptionsItemSelected(menuitem);
-//    }
-//
-//
-//    @SuppressLint("RestrictedApi")
-//    public boolean onCreateOptionsMenu (Menu menu){
-//        getMenuInflater().inflate(R.menu.main_menu, menu);
-//        if (menu instanceof MenuBuilder) {
-//            MenuBuilder m = (MenuBuilder) menu;
-//            m.setOptionalIconsVisible(true);
-//        }
-//        return true;
-//    }
-
-
-
-
-
 
 
 }
 
-
-
-
-
-
-
-
-
-
-
+   
+}

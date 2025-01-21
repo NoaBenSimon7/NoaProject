@@ -3,28 +3,21 @@ package com.example.noaproject.models;
 import java.io.Serializable;
 
 public class Item  implements Serializable {
-    protected String id, itemName, type, size, color, fabric, pic,dedc, imageRef;
+    protected String id, itemName, type, size, color, fabric, pic,desc, imageRef;
     protected double price;
 
 
-
-    public Item(String id, String name, String type, String size, String color, String fabric, String pic, double price) {
+    public Item(String id, String itemName, String type, String size, String color, String fabric, String pic, String desc, String imageRef, double price) {
         this.id = id;
-        this.itemName = name;
+        this.itemName = itemName;
         this.type = type;
         this.size = size;
         this.color = color;
         this.fabric = fabric;
         this.pic = pic;
-        this.price = price;
-    }
-    public Item(String itemName,String type, String imageRef, String dedc,String price){
-        this.itemName = itemName;
-        this.type = type;
+        this.desc = desc;
         this.imageRef = imageRef;
-        this.dedc = dedc;
-        this.price = Double.parseDouble(price);
-
+        this.price = price;
     }
 
     public Item() {
@@ -38,13 +31,7 @@ public class Item  implements Serializable {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
-    }
 
-    public void setName(String name) {
-        this.name = name;
-    }
 
     public String getType() {
         return type;
@@ -100,6 +87,31 @@ public class Item  implements Serializable {
 
     public void setPrice(double price) {
         this.price = price;
+    }
+
+
+    public String getItemName() {
+        return itemName;
+    }
+
+    public void setItemName(String itemName) {
+        this.itemName = itemName;
+    }
+
+    public String getDesc() {
+        return desc;
+    }
+
+    public void setDesc(String desc) {
+        this.desc = desc;
+    }
+
+    public String getImageRef() {
+        return imageRef;
+    }
+
+    public void setImageRef(String imageRef) {
+        this.imageRef = imageRef;
     }
 
     @Override

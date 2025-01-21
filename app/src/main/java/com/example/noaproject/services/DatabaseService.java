@@ -4,6 +4,8 @@ import android.util.Log;
 
 import androidx.annotation.Nullable;
 
+import com.example.noaproject.models.Cart;
+import com.example.noaproject.models.Item;
 import com.example.noaproject.models.User;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -19,6 +21,10 @@ import java.util.List;
 /// @see #getInstance()
 /// @see FirebaseDatabase
 
+/// a service to interact with the Firebase Realtime Database.
+/// this class is a singleton, use getInstance() to get an instance of this class
+/// @see #getInstance()
+/// @see FirebaseDatabase
 public class DatabaseService {
 
     /// tag for logging
@@ -139,8 +145,29 @@ public class DatabaseService {
         writeData("users/" + user.getId(), user, callback);
     }
 
+    /// create a new item in the database
+    /// @param item the item object to create
+    /// @param callback the callback to call when the operation is completed
+    ///              the callback will receive void
+    ///             if the operation fails, the callback will receive an exception
+    /// @return void
+    /// @see DatabaseCallback
+    /// @see Item
+    public void createNewItem(@NotNull final Item item, @Nullable final DatabaseCallback<Void> callback) {
+        writeData("items/" + item.getId(), item, callback);
+    }
 
-
+    /// create a new cart in the database
+    /// @param cart the cart object to create
+    /// @param callback the callback to call when the operation is completed
+    ///               the callback will receive void
+    ///              if the operation fails, the callback will receive an exception
+    /// @return void
+    /// @see DatabaseCallback
+    /// @see Cart
+    public void createNewCart(@NotNull final Cart cart, @Nullable final DatabaseCallback<Void> callback) {
+        writeData("carts/" + cart.getId(), cart, callback);
+    }
 
 
     /// get a user from the database
@@ -156,12 +183,37 @@ public class DatabaseService {
     }
 
 
-    /// generate a new id for a new food in the database
-    /// @return a new id for the food
+
+    /// get a item from the database
+    /// @param itemId the id of the item to get
+    /// @param callback the callback to call when the operation is completed
+    ///               the callback will receive the item object
+    ///              if the operation fails, the callback will receive an exception
+    /// @return void
+    /// @see DatabaseCallback
+    /// @see Item
+    public void getItem(@NotNull final String itemId, @NotNull final DatabaseCallback<Item> callback) {
+        getData("items/" + itemId, Item.class, callback);
+    }
+
+    /// get a cart from the database
+    /// @param cartId the id of the cart to get
+    /// @param callback the callback to call when the operation is completed
+    ///                the callback will receive the cart object
+    ///               if the operation fails, the callback will receive an exception
+    /// @return void
+    /// @see DatabaseCallback
+    /// @see Cart
+    public void getCart(@NotNull final String cartId, @NotNull final DatabaseCallback<Cart> callback) {
+        getData("carts/" + cartId, Cart.class, callback);
+    }
+
+    /// generate a new id for a new item in the database
+    /// @return a new id for the item
     /// @see #generateNewId(String)
-    /// @see Food
-    public String generateFoodId() {
-        return generateNewId("foods");
+    /// @see Item
+    public String generateItemId() {
+        return generateNewId("items");
     }
 
     /// generate a new id for a new cart in the database
@@ -172,6 +224,59 @@ public class DatabaseService {
         return generateNewId("carts");
     }
 
+    /// get all the items from the database
+    /// @param callback the callback to call when the operation is completed
+    ///              the callback will receive a list of item objects
+    ///            if the operation fails, the callback will receive an exception
+    /// @return void
+    /// @see DatabaseCallback
+    /// @see List
+    /// @see Item
+    /// @see #getData(String, Class, DatabaseCallback)
+    public void getItems(@NotNull final DatabaseCallback<List<Item>> callback) {
+        readData("items").get().addOnCompleteListener(task -> {
+            if (!task.isSuccessful()) {
+                Log.e(TAG, "Error getting data", task.getException());
+                callback.onFailed(task.getException());
+                return;
+            }
+            List<Item> items = new ArrayList<>();
+            task.getResult().getChildren().forEach(dataSnapshot -> {
+                Item item = dataSnapshot.getValue(Item.class);
+                Log.d(TAG, "Got item: " + item);
+                items.add(item);
+            });
+
+            callback.onCompleted(items);
+        });
+    }
+
+    /// get all the users from the database
+    /// @param callback the callback to call when the operation is completed
+    ///              the callback will receive a list of item objects
+    ///            if the operation fails, the callback will receive an exception
+    /// @return void
+    /// @see DatabaseCallback
+    /// @see List
+    /// @see Item
+    /// @see #getData(String, Class, DatabaseCallback)
+    public void getUsers(@NotNull final DatabaseCallback<List<User>> callback) {
+        readData("Users").get().addOnCompleteListener(task -> {
+            if (!task.isSuccessful()) {
+                Log.e(TAG, "Error getting data", task.getException());
+                callback.onFailed(task.getException());
+                return;
+            }
+            List<User> users = new ArrayList<>();
+            task.getResult().getChildren().forEach(dataSnapshot -> {
+                User user = dataSnapshot.getValue(User.class);
+                Log.d(TAG, "Got user: " + user);
+                users.add(user);
+            });
+
+            callback.onCompleted(users);
+        });
+    }
 
 
 

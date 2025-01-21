@@ -32,7 +32,7 @@
         android:layout_marginBottom="37dp"
         android:ems="10"
         android:inputType="text"
-        android:text="Name"
+        android:hint="Name"
         app:layout_constraintBottom_toTopOf="@+id/spItemType"
         app:layout_constraintEnd_toEndOf="@+id/spItemType"
         app:layout_constraintTop_toBottomOf="@+id/textView3" />
@@ -155,6 +155,17 @@
         app:layout_constraintBottom_toTopOf="@+id/btnGalleryD"
         app:layout_constraintStart_toStartOf="@+id/spItemColor"
         app:layout_constraintTop_toBottomOf="@+id/spItemColor" />
+
+    <EditText
+        android:id="@+id/etItemDesc"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="אודות"
+        android:ems="10"
+        android:inputType="text"
+        android:text="Name"
+        tools:layout_editor_absoluteX="17dp"
+        tools:layout_editor_absoluteY="593dp" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

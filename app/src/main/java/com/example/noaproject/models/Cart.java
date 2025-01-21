@@ -2,32 +2,86 @@ package com.example.noaproject.models;
 
 
 
+import androidx.annotation.NonNull;
+
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.List;
 
-public class Cart  implements Serializable {
+public class Cart {
 
-    protected ArrayList<ItemOrder> itemOrders;
+    /// unique id of the cart
+    private String id;
 
-    public Cart(ArrayList<ItemOrder> itemOrders) {
-        this.itemOrders = itemOrders;
-    }
+    private final ArrayList<Item> items;
 
     public Cart() {
+        items = new ArrayList<>();
     }
 
-    public ArrayList<ItemOrder> getItemOrders() {
-        return itemOrders;
+    public Cart(String id) {
+        this.id = id;
+        items = new ArrayList<>();
     }
 
-    public void setItemOrders(ArrayList<ItemOrder> itemOrders) {
-        this.itemOrders = itemOrders;
+    public String getId() {
+        return id;
     }
 
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public void addItem(Item item) {
+        items.add(item);
+    }
+
+    public void addItems(List<Item> items) {
+        this.items.addAll(items);
+    }
+
+    public boolean removeItem(Item item) {
+        return items.remove(item);
+    }
+
+    public Item removeItem(int index) {
+        if (index < 0 || index >= items.size()) {
+            return null;
+        }
+        return items.remove(index);
+    }
+
+    public Item getItem(int index) {
+        if (index < 0 || index >= items.size()) {
+            return null;
+        }
+        return items.get(index);
+    }
+
+    public ArrayList<Item> getItems() {
+        return items;
+    }
+
+    public double getTotalPrice() {
+        double totalPrice = 0;
+        for (Item item : items) {
+            totalPrice += item.getPrice();
+        }
+        return totalPrice;
+    }
+
+    public void clear() {
+        items.clear();
+    }
+
+    @NonNull
     @Override
     public String toString() {
         return "Cart{" +
-                "itemOrders=" + itemOrders +
+                "id='" + id + '\'' +
+                ", items=" + items +
                 '}';
     }
+
+
 }
