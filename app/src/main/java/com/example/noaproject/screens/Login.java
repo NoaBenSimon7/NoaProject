@@ -35,6 +35,8 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
     AuthenticationService authenticationService;
     DatabaseService databaseService;
 
+    User user=new User();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +54,12 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
         databaseService = DatabaseService.getInstance();
 
         initViews();
+
+
+      user=  SharedPreferencesUtil.getUser(Login.this);
+
+      etEmail.setText(user.getEmail());
+      etPassword.setText(user.getPassword());
     }
 
     private void initViews() {
@@ -73,7 +81,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
                 // Sign in success, update UI with the signed-in user's information
                 Log.d("TAG", "signInWithEmail:success");
 
-                Intent go = new Intent(getApplicationContext(), MainActivity.class);
+                Intent go = new Intent(getApplicationContext(), AdminPage.class);
                 startActivity(go);
             }
 

@@ -80,6 +80,7 @@
         android:layout_marginStart="54dp"
         android:layout_marginEnd="53dp"
         android:layout_marginBottom="27dp"
+        android:entries="@array/colorArr"
         app:layout_constraintBottom_toTopOf="@+id/etItemPrice"
         app:layout_constraintEnd_toEndOf="@+id/ivD"
         app:layout_constraintStart_toStartOf="parent"
@@ -137,10 +138,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="43dp"
-        android:text="הוספה"
         android:backgroundTint="#fcecbd"
+        android:text="הוספה"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/spItemColor"
+        app:layout_constraintHorizontal_bias="0.505"
         app:layout_constraintStart_toStartOf="@+id/spItemColor"
         app:layout_constraintTop_toBottomOf="@+id/btnTakePicD" />
 
@@ -158,14 +160,18 @@
 
     <EditText
         android:id="@+id/etItemDesc"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:hint="אודות"
+        android:layout_width="186dp"
+        android:layout_height="37dp"
+
         android:ems="10"
+        android:hint="Desc"
         android:inputType="text"
-        android:text="Name"
-        tools:layout_editor_absoluteX="17dp"
-        tools:layout_editor_absoluteY="593dp" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.368"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.858" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

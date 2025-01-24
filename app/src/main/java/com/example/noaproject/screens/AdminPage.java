@@ -50,7 +50,7 @@ public class AdminPage extends AppCompatActivity implements View.OnClickListener
     @Override
     public void onClick(View v) {
         if(v==btnGoSearchPage){
-            Intent go=new Intent(this, SearchPage.class);
+            Intent go=new Intent(this, MainActivity.class);
             startActivity(go);
         }
         //  if(view==btnGoAddDonationPlace){
@@ -90,5 +90,3 @@ public class AdminPage extends AppCompatActivity implements View.OnClickListener
 
 
 
-}
-}

@@ -1,5 +1,6 @@
 package com.example.noaproject.screens;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.activity.EdgeToEdge;
@@ -9,18 +10,19 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.example.noaproject.R;
+import com.example.noaproject.models.Item;
 
 public class MyService extends AppCompatActivity {
 
 
-    Intent takeit;
-
-    ArrayList<Product>productArrayList=new ArrayList<>();
-
-    ArrayAdapter<Product>adapter;
-
-    ProductAdapter adapter2;
-    ListView lvProduct;
+//    Intent takeit;
+//
+//    ArrayList<Item>productArrayList=new ArrayList<>();
+//
+//    ArrayAdapter<Product>adapter;
+//
+//    ProductAdapter adapter2;
+//    ListView lvProduct;
 
 
     @Override
@@ -35,20 +37,18 @@ public class MyService extends AppCompatActivity {
         });
 
 
-        lvProduct=findViewById(R.id.lvProduct);
+//        lvProduct=findViewById(R.id.lvProduct);
+//
+//        takeit=getIntent();
+//
+//        productArrayList= (ArrayList<Product>) takeit.getSerializableExtra("data");
+//
+//        adapter=new ArrayAdapter<>(this, android.R.layout.simple_list_item_1,productArrayList);
+//
+//
+//
+//        lvProduct.setAdapter(adapter2);
+//         adapter2=new ProductAdapter(this,0,0,productArrayList);
 
-        takeit=getIntent();
-
-        productArrayList= (ArrayList<Product>) takeit.getSerializableExtra("data");
-
-        adapter=new ArrayAdapter<>(this, android.R.layout.simple_list_item_1,productArrayList);
-
-
-
-        lvProduct.setAdapter(adapter2);
-        // adapter2=new ProductAdapter(this,0,0,productArrayList);
-
-    }
-}
     }
 }

@@ -60,14 +60,17 @@ public class AddItem extends AppCompatActivity implements View.OnClickListener {
 
 
 
+
+
     /// Activity result launcher for selecting image from gallery
     private ActivityResultLauncher<Intent> selectImageLauncher;
+
     /// Activity result launcher for capturing image from camera
     private ActivityResultLauncher<Intent> captureImageLauncher;
 
 
     // One Preview Image
-    ImageView IVPreviewImage;
+
 
     // constant to compare
     // the activity result code
@@ -89,11 +92,37 @@ public class AddItem extends AppCompatActivity implements View.OnClickListener {
         initViews();
 
 
-/// request permission for the camera and storage
+
+        /// request permission for the camera and storage
         ImageUtil.requestPermission(this);
+
+        /// register the activity result launcher for selecting image from gallery
+        selectImageLauncher = registerForActivityResult(
+                new ActivityResultContracts.StartActivityForResult(),
+                result -> {
+                    if (result.getResultCode() == RESULT_OK && result.getData() != null) {
+                        Uri selectedImage = result.getData().getData();
+                        ivItem.setImageURI(selectedImage);
+                    }
+                });
+
+        /// register the activity result launcher for capturing image from camera
+        captureImageLauncher = registerForActivityResult(
+                new ActivityResultContracts.StartActivityForResult(),
+                result -> {
+                    if (result.getResultCode() == RESULT_OK && result.getData() != null) {
+                        Bitmap bitmap = (Bitmap) result.getData().getExtras().get("data");
+                        ivItem.setImageBitmap(bitmap);
+                    }
+                });
+
+
 
         /// get the instance of the database service
         databaseService = DatabaseService.getInstance();
+
+
+
 
     }
 
@@ -108,36 +137,18 @@ public class AddItem extends AppCompatActivity implements View.OnClickListener {
         spItemSize=findViewById(R.id.spItemSize);
         spItemFabric=findViewById(R.id.spItemFabric);
         spItemColor=findViewById(R.id.spItemColor);
-        btnGoCamera=findViewById(R.id.btnGalleryD);
+        btnGoCamera=findViewById(R.id.btnTakePicD);
         btnGoGallery=findViewById(R.id.btnGalleryD);
+
+        etItemDesc=findViewById(R.id.etItemDesc);
+
+        btnGoGallery.setOnClickListener(this);
+        btnGoCamera.setOnClickListener(this);
 
         /// set the on click listeners
 
         btnAddItem.setOnClickListener(this);
 
-        /// register the activity result launcher for selecting image from gallery
-        selectImageLauncher = registerForActivityResult(
-                new ActivityResultContracts.StartActivityForResult(),
-                result -> {
-                    if (result.getResultCode() == RESULT_OK && result.getData() != null) {
-                        Uri selectedImage = result.getData().getData();
-                        ivItem.setImageURI(selectedImage);
-                        /// set the tag for the image view to null
-                        ivItem.setTag(null);
-                    }
-                });
-
-        /// register the activity result launcher for capturing image from camera
-        captureImageLauncher = registerForActivityResult(
-                new ActivityResultContracts.StartActivityForResult(),
-                result -> {
-                    if (result.getResultCode() == RESULT_OK && result.getData() != null) {
-                        Bitmap bitmap = (Bitmap) result.getData().getExtras().get("data");
-                        ivItem.setImageBitmap(bitmap);
-                        /// set the tag for the image view to null
-                        ivItem.setTag(null);
-                    }
-                });
 
 
     }
@@ -175,12 +186,12 @@ public class AddItem extends AppCompatActivity implements View.OnClickListener {
         String size = spItemSize.getSelectedItem().toString();
         String color = spItemColor.getSelectedItem().toString();
         String fabric = spItemFabric.getSelectedItem().toString();
-        String desc= etItemDesc.getText().toString().
-        String imageRef = ImageUtil.convertTo64Base(ivItem);
+        String desc= etItemDesc.getText().toString()+"";
+        String  imageRef = ImageUtil.convertTo64Base(ivItem);
 
         /// validate the input
         /// stop if the input is not valid
-        if (!isValid(name, priceText, imageRef)) return;
+      //  if (!isValid(name, priceText, imageRef)) return;
 
         /// convert the price to double
         double price = Double.parseDouble(priceText);
@@ -195,7 +206,11 @@ public class AddItem extends AppCompatActivity implements View.OnClickListener {
         Log.d(TAG, "Image: " + imageRef);
 
         /// create a new item object
-        Item item = new Item(id, itemName, type, size, color, fabric, imageRef, desc, price);
+
+
+
+
+            Item item = new Item(id, itemName, type, size, color, fabric, desc, imageRef, price);
 
         /// save the item to the database and get the result in the callback
         databaseService.createNewItem(item, new DatabaseService.DatabaseCallback<Void>() {
@@ -207,13 +222,16 @@ public class AddItem extends AppCompatActivity implements View.OnClickListener {
                 Log.d(TAG, "Clearing input fields");
                 etItemName.setText("");
                 etItemPrice.setText("");
-                IVPreviewImage.setImageBitmap(null);
+                ivItem.setImageBitmap(null);
+
+
+
             }
 
             @Override
             public void onFailed(Exception e) {
                 Log.e(TAG, "Failed to add item", e);
-                Toast.makeText(AddItem.this, "Failed to add item", Toast.LENGTH_SHORT).show();
+                Toast.makeText(AddItem.this, "Failed to add item", Toast.LENGTH_LONG).show();
             }
         });
     }
@@ -261,6 +279,7 @@ public class AddItem extends AppCompatActivity implements View.OnClickListener {
 
     void imageChooser() {
 
+
         // create an instance of the
         // intent of the type image
         Intent i = new Intent();
@@ -270,8 +289,10 @@ public class AddItem extends AppCompatActivity implements View.OnClickListener {
         // pass the constant to compare it
         // with the returned requestCode
         startActivityForResult(Intent.createChooser(i, "Select Picture"), SELECT_PICTURE);
-    }
 
+
+
+    }
     // this function is triggered when user
     // selects the image from the imageChooser
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -286,14 +307,14 @@ public class AddItem extends AppCompatActivity implements View.OnClickListener {
                 Uri selectedImageUri = data.getData();
                 if (null != selectedImageUri) {
                     // update the preview image in the layout
-                    IVPreviewImage.setImageURI(selectedImageUri);
+                    ivItem.setImageURI(selectedImageUri);
                 }
             }
         }
     }
 
 
+
 }
 
    
-}

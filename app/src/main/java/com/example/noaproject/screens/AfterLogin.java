@@ -54,30 +54,7 @@ public class AfterLogin extends AppCompatActivity implements View.OnClickListene
 
     @Override
     public void onClick(View v) {
-        if(v==btnGoStore2){
-            stopService(new Intent(this, MyService.class));
 
-            Intent goStore=new Intent(this, SearchItem.class);
-            startActivity(goStore);
-        }
-        //  if(view==btnGoAddItem2){
-        //      Intent goAddItem=new Intent(this, AddItem.class);
-        //     startActivity(goAddItem);
-        //  }
-        if(v==btnGoWishList){
-            stopService(new Intent(this, MyService.class));
-
-            Intent goWishList=new Intent(this, Mycart.class);
-            startActivity(goWishList);
-        }
-        if(v==btnGoPersonal){
-            Intent goProfile=new Intent(this, UserProfile.class);
-            startActivity(goProfile);
-        }
-        //    if(view==btnGoDonation){
-        //       Intent goDonation=new Intent(this, DonationPage.class);
-        //        startActivity(goDonation);
-        //   }
 
     }
 

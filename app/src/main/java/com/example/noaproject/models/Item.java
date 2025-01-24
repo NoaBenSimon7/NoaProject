@@ -3,18 +3,18 @@ package com.example.noaproject.models;
 import java.io.Serializable;
 
 public class Item  implements Serializable {
-    protected String id, itemName, type, size, color, fabric, pic,desc, imageRef;
+    protected String id, itemName, type, size, color, fabric, imageRef,desc;
     protected double price;
 
 
-    public Item(String id, String itemName, String type, String size, String color, String fabric, String pic, String desc, String imageRef, double price) {
+    public Item(String id, String itemName, String type, String size, String color, String fabric, String desc, String imageRef, double price) {
         this.id = id;
         this.itemName = itemName;
         this.type = type;
         this.size = size;
         this.color = color;
         this.fabric = fabric;
-        this.pic = pic;
+
         this.desc = desc;
         this.imageRef = imageRef;
         this.price = price;
@@ -31,7 +31,13 @@ public class Item  implements Serializable {
         this.id = id;
     }
 
+    public String getItemName() {
+        return itemName;
+    }
 
+    public void setItemName(String itemName) {
+        this.itemName = itemName;
+    }
 
     public String getType() {
         return type;
@@ -44,8 +50,6 @@ public class Item  implements Serializable {
     public String getSize() {
         return size;
     }
-
-
 
     public void setSize(String size) {
         this.size = size;
@@ -67,35 +71,12 @@ public class Item  implements Serializable {
         this.fabric = fabric;
     }
 
-    public String getPic() {
-        return pic;
+    public String getImageRef() {
+        return imageRef;
     }
 
-    public void setPic(String pic) {
-        this.pic = pic;
-    }
-
-
-
-    public void setPrice(Integer price) {
-        this.price = price;
-    }
-
-    public double getPrice() {
-        return price;
-    }
-
-    public void setPrice(double price) {
-        this.price = price;
-    }
-
-
-    public String getItemName() {
-        return itemName;
-    }
-
-    public void setItemName(String itemName) {
-        this.itemName = itemName;
+    public void setImageRef(String imageRef) {
+        this.imageRef = imageRef;
     }
 
     public String getDesc() {
@@ -106,24 +87,25 @@ public class Item  implements Serializable {
         this.desc = desc;
     }
 
-    public String getImageRef() {
-        return imageRef;
+    public double getPrice() {
+        return price;
     }
 
-    public void setImageRef(String imageRef) {
-        this.imageRef = imageRef;
+    public void setPrice(double price) {
+        this.price = price;
     }
 
     @Override
     public String toString() {
         return "Item{" +
                 "id='" + id + '\'' +
-                ", name='" + name + '\'' +
+                ", itemName='" + itemName + '\'' +
                 ", type='" + type + '\'' +
                 ", size='" + size + '\'' +
                 ", color='" + color + '\'' +
                 ", fabric='" + fabric + '\'' +
-                ", pic='" + pic + '\'' +
+                ", imageRef='" + imageRef + '\'' +
+                ", desc='" + desc + '\'' +
                 ", price=" + price +
                 '}';
     }
