@@ -8,36 +8,51 @@
     tools:context=".screens.MainActivity">
 
 
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="165dp"
-        android:layout_marginTop="52dp"
-        android:text="ברוכים הבאים"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
     <Button
         android:id="@+id/btnReg"
-        android:layout_width="120dp"
-        android:layout_height="67dp"
-        android:layout_marginStart="144dp"
-        android:layout_marginTop="222dp"
+        android:layout_width="316dp"
+        android:layout_height="59dp"
+        android:layout_marginStart="48dp"
+        android:layout_marginTop="424dp"
+        android:backgroundTint="#f7e6d0"
         android:onClick="goReg"
         android:text="התחברות"
+        android:textColor="@color/black"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/btnLog"
-        android:layout_width="110dp"
-        android:layout_height="68dp"
-        android:layout_marginStart="4dp"
-        android:layout_marginTop="36dp"
+        android:layout_width="308dp"
+        android:layout_height="55dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="28dp"
+        android:backgroundTint="#e0cba8"
         android:onClick="goLogin"
+
+
         android:text="הרשמה"
         app:layout_constraintStart_toStartOf="@+id/btnReg"
         app:layout_constraintTop_toBottomOf="@+id/btnReg" />
+
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="275dp"
+        android:layout_height="318dp"
+        android:layout_marginTop="32dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/logo" />
+
+    <Button
+        android:id="@+id/button"
+        android:layout_width="317dp"
+        android:layout_height="56dp"
+        android:backgroundTint="#d8c6b6"
+        android:text="אודות"
+
+        tools:layout_editor_absoluteX="56dp"
+        tools:layout_editor_absoluteY="581dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
