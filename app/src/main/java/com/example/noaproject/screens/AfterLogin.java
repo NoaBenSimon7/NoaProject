@@ -55,6 +55,12 @@ public class AfterLogin extends AppCompatActivity implements View.OnClickListene
     @Override
     public void onClick(View v) {
 
+        if(v==btnGoStore2){
+
+            Intent go=new Intent(this, ShowItems.class);
+            startActivity(go);
+        }
+
 
     }
 

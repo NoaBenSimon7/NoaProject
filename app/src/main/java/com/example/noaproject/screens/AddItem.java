@@ -223,6 +223,10 @@ public class AddItem extends AppCompatActivity implements View.OnClickListener {
                 etItemName.setText("");
                 etItemPrice.setText("");
                 ivItem.setImageBitmap(null);
+                Intent goLog=new Intent(AddItem.this, AdminPage.class);
+                startActivity(goLog);
+
+
 
 
 
