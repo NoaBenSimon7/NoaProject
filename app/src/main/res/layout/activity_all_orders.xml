@@ -5,6 +5,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/background2"
     tools:context=".screens.AllOrders">
 
     <TextView
@@ -15,7 +16,8 @@
         android:layout_marginBottom="30dp"
         android:gravity="center"
         android:text="ההזמנות"
-        android:textSize="18dp"
+
+        android:textSize="20dp"
         app:layout_constraintBottom_toTopOf="@+id/lvShowAllOrders"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

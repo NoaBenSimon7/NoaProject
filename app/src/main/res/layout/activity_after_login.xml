@@ -5,21 +5,20 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".screens.AfterLogin"
-    android:background="@drawable/background2">
-
+    android:background="@drawable/background2"
+    tools:context=".screens.AfterLogin">
 
 
     <Button
         android:id="@+id/btnGoStore2"
-        android:layout_width="382dp"
-        android:layout_height="109dp"
-        android:layout_marginStart="13dp"
-        android:layout_marginEnd="13dp"
-        android:layout_marginBottom="9dp"
-        android:backgroundTint="#fcecbd"
+        android:layout_width="304dp"
+        android:layout_height="59dp"
+        android:layout_marginStart="49dp"
+        android:layout_marginEnd="49dp"
+        android:layout_marginBottom="24dp"
+        android:backgroundTint="#e0cba8"
         android:text="מעבר לחנות"
-        android:textSize="30dp"
+        android:textSize="20dp"
         app:layout_constraintBottom_toTopOf="@+id/btnGoMyCart"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -27,14 +26,15 @@
 
     <Button
         android:id="@+id/btnGoMyCart"
-        android:layout_width="382dp"
-        android:layout_height="109dp"
-        android:layout_marginStart="14dp"
-        android:layout_marginEnd="14dp"
-        android:layout_marginBottom="5dp"
-        android:backgroundTint="#fcecbd"
+        android:layout_width="303dp"
+        android:layout_height="60dp"
+        android:layout_marginStart="48dp"
+
+        android:layout_marginEnd="48dp"
+        android:layout_marginBottom="21dp"
+        android:backgroundTint="#e0cba8"
         android:text="הסל שלי "
-        android:textSize="30dp"
+        android:textSize="20dp"
         app:layout_constraintBottom_toTopOf="@+id/btnGoPersonalArea"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -42,31 +42,32 @@
 
     <Button
         android:id="@+id/btnGoPersonalArea"
-        android:layout_width="382dp"
-        android:layout_height="109dp"
-        android:layout_marginStart="14dp"
-        android:layout_marginEnd="14dp"
-        android:layout_marginBottom="61dp"
-        android:backgroundTint="#fcecbd"
+        android:layout_width="309dp"
+        android:layout_height="57dp"
+        android:layout_marginStart="49dp"
+        android:layout_marginEnd="49dp"
+        android:layout_marginBottom="135dp"
+        android:backgroundTint="#e0cba8"
         android:text="לאיזור האישי"
-        android:textSize="30dp"
+        android:textSize="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btnGoMyCart" />
 
     <ImageView
         android:id="@+id/imageView33"
-        android:layout_width="382dp"
-        android:layout_height="109dp"
-        android:layout_marginStart="54dp"
-        android:layout_marginTop="42dp"
-        android:layout_marginEnd="54dp"
-        android:layout_marginBottom="178dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="11dp"
+        android:layout_marginTop="62dp"
+        android:layout_marginEnd="11dp"
+        android:layout_marginBottom="80dp"
         app:layout_constraintBottom_toTopOf="@+id/btnGoStore2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-         />
+        app:srcCompat="@drawable/logo" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

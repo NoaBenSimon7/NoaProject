@@ -3,74 +3,73 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="180dp">
+    android:layout_height="180dp"
+    android:background="@drawable/background2">
+
 
     <TextView
         android:id="@+id/tvItemName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="13dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
         android:text="TextView"
-        app:layout_constraintBottom_toBottomOf="@+id/tvItemType"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/tvItemType" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/tvItemType"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginStart="16dp"
         android:text="TextView"
-        app:layout_constraintStart_toEndOf="@+id/tvItemName"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintBaseline_toBaselineOf="@+id/tvItemPrice"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
         android:id="@+id/tvItemSize"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="14dp"
+        android:layout_marginStart="16dp"
         android:text="TextView"
-        app:layout_constraintBaseline_toBaselineOf="@+id/tvItemColor"
+        app:layout_constraintBaseline_toBaselineOf="@+id/tvItemDesc"
         app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
         android:id="@+id/tvItemColor"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="14dp"
-        android:layout_marginEnd="2dp"
+        android:layout_marginStart="22dp"
+        android:layout_marginTop="16dp"
         android:text="TextView"
-        app:layout_constraintEnd_toEndOf="@+id/tvItemType"
-        app:layout_constraintTop_toBottomOf="@+id/tvItemType" />
+        app:layout_constraintStart_toEndOf="@+id/tvItemName"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/tvItemFabric"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="12dp"
-        android:layout_marginTop="61dp"
-        android:layout_marginBottom="61dp"
+        android:layout_marginStart="16dp"
         android:text="TextView"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toBottomOf="@+id/button2"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvItemName" />
+        app:layout_constraintTop_toTopOf="@+id/button2" />
 
     <TextView
         android:id="@+id/tvItemPrice"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="17dp"
+        android:layout_marginTop="17dp"
         android:text="TextView"
-        app:layout_constraintBaseline_toBaselineOf="@+id/tvItemFabric"
-        app:layout_constraintStart_toEndOf="@+id/tvItemFabric" />
+        app:layout_constraintStart_toStartOf="@+id/tvItemColor"
+        app:layout_constraintTop_toBottomOf="@+id/tvItemColor" />
 
     <ImageView
         android:id="@+id/ivItemImageRef"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
-        android:layout_marginEnd="62dp"
+        android:layout_marginEnd="39dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:srcCompat="@tools:sample/avatars" />
@@ -79,13 +78,26 @@
         android:id="@+id/tvItemDesc"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="35dp"
-        android:layout_marginTop="21dp"
-        android:layout_marginEnd="40dp"
-        android:layout_marginBottom="21dp"
+        android:layout_marginTop="41dp"
+        android:layout_marginBottom="42dp"
         android:text="TextView"
+        app:layout_constraintBottom_toBottomOf="@+id/ivItemImageRef"
+        app:layout_constraintStart_toStartOf="@+id/button2"
+        app:layout_constraintTop_toTopOf="@+id/tvItemPrice" />
+
+    <Button
+        android:id="@+id/button2"
+        android:layout_width="97dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="22dp"
+        android:layout_marginTop="11dp"
+        android:layout_marginBottom="16dp"
+        android:text="הוספה"
+        android:backgroundTint="#d8c6b6"
+
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/tvItemPrice"
-        app:layout_constraintStart_toStartOf="@+id/tvItemFabric"
-        app:layout_constraintTop_toBottomOf="@+id/tvItemFabric" />
+        app:layout_constraintStart_toEndOf="@+id/tvItemFabric"
+        app:layout_constraintTop_toBottomOf="@+id/tvItemDesc" />
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>
