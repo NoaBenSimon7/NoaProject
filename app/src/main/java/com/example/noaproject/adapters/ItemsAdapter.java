@@ -56,12 +56,12 @@ import java.util.List;
 
             holder.tvName.setText(item.getItemName());
 
-            holder.tvSize.setText(item.getSize());
-            holder.tvType.setText(item.getType());
-            holder.tvColor.setText(item.getColor());
-            holder.tvFabric.setText(item.getFabric());
-            holder.tvPrice.setText(item.getPrice()+"");
-            holder.tvDesc.setText(item.getDesc());
+            holder.tvSize.setText( "מידה:  " + item.getSize());
+            holder.tvType.setText( "פריט:  " + item.getType());
+            holder.tvColor.setText( "צבע:  " + item.getColor());
+            holder.tvFabric.setText( "סוג:  " + item.getFabric());
+            holder.tvPrice.setText("מחיר: " + item.getPrice());
+            holder.tvDesc.setText( "תיאור:  " + item.getDesc());
 
             holder.itemImageView.setImageBitmap(ImageUtil.convertFrom64base(item.getImageRef()));
         }

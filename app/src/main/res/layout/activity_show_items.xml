@@ -5,6 +5,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/background2"
     tools:context=".screens.ShowItems">
 
     <TextView
@@ -13,7 +14,9 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="41dp"
         android:layout_marginBottom="1dp"
-        android:text="TextView"
+        android:text="חנות"
+        android:textSize="20dp"
+        android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/svItems"
         app:layout_constraintEnd_toEndOf="@+id/svItems"
         app:layout_constraintStart_toStartOf="@+id/svItems"
