@@ -112,7 +112,7 @@ public class Register extends AppCompatActivity implements View.OnClickListener 
             isValid = false;
         }
 
-        if (isValid == true) {
+        if (isValid) {
 
 
             registerUser(email, pass, fName, lName, phone);

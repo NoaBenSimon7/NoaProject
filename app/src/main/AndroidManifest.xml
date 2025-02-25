@@ -13,6 +13,9 @@
         android:theme="@style/Theme.NoaProject"
         tools:targetApi="31">
         <activity
+            android:name=".screens.ItemDetailActivity"
+            android:exported="false" />
+        <activity
             android:name=".screens.ShowItems"
             android:exported="false" />
         <activity

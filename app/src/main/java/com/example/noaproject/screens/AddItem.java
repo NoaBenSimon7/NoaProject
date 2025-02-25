@@ -171,7 +171,6 @@ public class AddItem extends AppCompatActivity implements View.OnClickListener {
             // capture image from camera
             Log.d(TAG, "Capture image button clicked");
             captureImageFromCamera();
-            return;
         }
     }
 
@@ -186,7 +185,7 @@ public class AddItem extends AppCompatActivity implements View.OnClickListener {
         String size = spItemSize.getSelectedItem().toString();
         String color = spItemColor.getSelectedItem().toString();
         String fabric = spItemFabric.getSelectedItem().toString();
-        String desc= etItemDesc.getText().toString()+"";
+        String desc= etItemDesc.getText().toString();
         String  imageRef = ImageUtil.convertTo64Base(ivItem);
 
         /// validate the input
