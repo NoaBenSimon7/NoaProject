@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -39,17 +40,14 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ViewHolder> 
         if (item == null) return;
 
         holder.tvName.setText(item.getItemName());
-        holder.tvSize.setText("מידה:  " + item.getSize());
-        holder.tvType.setText("פריט:  " + item.getType());
-        holder.tvColor.setText("צבע:  " + item.getColor());
-        holder.tvFabric.setText("סוג:  " + item.getFabric());
+
         holder.tvPrice.setText("מחיר: " + item.getPrice());
-        holder.tvDesc.setText("תיאור:  " + item.getDesc());
+
 
         holder.itemImageView.setImageBitmap(ImageUtil.convertFrom64base(item.getImageRef()));
 
         // הוספתי את הלוגיקה למעבר למסך פרטי המוצר כאשר לוחצים על פריט
-        holder.itemView.setOnClickListener(v -> {
+        holder.btnGoDetails.setOnClickListener(v -> {
             // יצירת Intent למעבר למסך פרטי המוצר
             Intent intent = new Intent(v.getContext(), ItemDetailActivity.class);
             // הוספת המידע של המוצר ל-Intent
@@ -65,24 +63,21 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ViewHolder> 
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         public final TextView tvName;
-        public final TextView tvType;
-        public final TextView tvSize;
-        public final TextView tvColor;
-        public final TextView tvFabric;
+
         public final TextView tvPrice;
-        public final TextView tvDesc;
+
         public final ImageView itemImageView;
+        public final Button btnGoDetails;
 
         public ViewHolder(View itemView) {
             super(itemView);
             tvName = itemView.findViewById(R.id.tvItemName);
-            tvType = itemView.findViewById(R.id.tvItemType);
-            tvSize = itemView.findViewById(R.id.tvItemSize);
-            tvColor = itemView.findViewById(R.id.tvItemColor);
-            tvFabric = itemView.findViewById(R.id.tvItemFabric);
-            tvDesc = itemView.findViewById(R.id.tvItemDesc);
+
             tvPrice = itemView.findViewById(R.id.tvItemPrice);
             itemImageView = itemView.findViewById(R.id.ivItemImageRef);
+            btnGoDetails = itemView.findViewById(R.id.btnGoToDetails);
+
+
         }
     }
 }

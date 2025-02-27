@@ -12,6 +12,7 @@ import androidx.core.view.WindowInsetsCompat;
 
 import com.example.noaproject.R;
 import com.example.noaproject.models.Item;
+import com.example.noaproject.utils.ImageUtil;
 
 public class ItemDetailActivity extends AppCompatActivity {
 
@@ -46,8 +47,10 @@ public class ItemDetailActivity extends AppCompatActivity {
             itemColor.setText(item.getColor());
             itemFabric.setText(item.getFabric());
             itemDesc.setText(item.getDesc());
-            itemPrice.setText(String.valueOf(item.getPrice()));
+            itemPrice.setText(String.valueOf(item.getPrice())+"");
 
+        itemImage.setImageBitmap(ImageUtil.convertFrom64base(item.getImageRef()));
+//
             // Load image (you can use a library like Glide or Picasso to load images)
             // Glide.with(this).load(item.getImageRef()).into(itemImage);
         }

@@ -89,7 +89,6 @@ public class ShowItems extends AppCompatActivity implements View.OnClickListener
 
         Intent goReg=new Intent(ShowItems.this, ItemDetailActivity.class);
 
-        goReg.putExtra("item",item)
         startActivity(goReg);
 
     }
