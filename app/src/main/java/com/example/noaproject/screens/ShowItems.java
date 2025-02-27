@@ -27,7 +27,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ShowItems extends AppCompatActivity {
+public class ShowItems extends AppCompatActivity implements View.OnClickListener {
     /// tag for logging
     private static final String TAG = "ShowItemsActivity";
 
@@ -59,6 +59,7 @@ public class ShowItems extends AppCompatActivity {
         RecyclerView selectedItemsRecyclerView = findViewById(R.id.rcItems);
 
         itemsAdapter = new ItemsAdapter(allItem);
+
         selectedItemsRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         selectedItemsRecyclerView.setAdapter(itemsAdapter);
 
@@ -81,6 +82,16 @@ public class ShowItems extends AppCompatActivity {
 
         // Adapter for item spinner - This part is commented out, but you can add a spinner logic here
         // @see ItemSpinnerAdapter
+    }
+
+    @Override
+    public void onClick(View v) {
+
+        Intent goReg=new Intent(ShowItems.this, ItemDetailActivity.class);
+
+        goReg.putExtra("item",item)
+        startActivity(goReg);
+
     }
 
     // Optionally, you can handle the item click directly in this activity,
