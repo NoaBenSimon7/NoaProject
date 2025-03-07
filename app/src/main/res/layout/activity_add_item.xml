@@ -11,24 +11,26 @@
 
     <TextView
         android:id="@+id/textView3"
-        android:layout_width="180dp"
+        android:layout_width="0dp"
         android:layout_height="0dp"
 
+        android:layout_marginStart="10dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="10dp"
-        android:layout_marginBottom="27dp"
+        android:layout_marginBottom="143dp"
         android:text="הוספת פריט"
         android:textSize="30dp"
-        app:layout_constraintBottom_toTopOf="@+id/etItemName"
+        app:layout_constraintBottom_toTopOf="@+id/spItemSize"
         app:layout_constraintEnd_toEndOf="@+id/etItemName"
+        app:layout_constraintStart_toStartOf="@+id/etItemName"
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
         android:id="@+id/etItemName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="19dp"
-        android:layout_marginBottom="33dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginBottom="27dp"
         android:ems="10"
         android:hint="Name"
         android:inputType="text"
@@ -39,74 +41,133 @@
     <Spinner
         android:id="@+id/spItemType"
         android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginBottom="26dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="28dp"
+        android:layout_marginEnd="28dp"
+        android:layout_marginBottom="18dp"
         android:entries="@array/typeArr"
-        app:layout_constraintBottom_toTopOf="@+id/spItemSize"
+        app:layout_constraintBottom_toTopOf="@+id/etSizes"
         app:layout_constraintEnd_toEndOf="@+id/spItemColor"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/spItemSize"
+        app:layout_constraintStart_toStartOf="@+id/etSizes"
         app:layout_constraintTop_toBottomOf="@+id/etItemName" />
+
 
     <Spinner
         android:id="@+id/spItemSize"
         android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginStart="1dp"
-        android:layout_marginEnd="1dp"
-        android:layout_marginBottom="22dp"
+        android:layout_height="40dp"
+        android:layout_marginEnd="57dp"
+        android:layout_marginBottom="85dp"
         android:entries="@array/sizeArr"
+        app:layout_constraintBottom_toTopOf="@+id/spItemColor"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/etSizes"
+        app:layout_constraintTop_toBottomOf="@+id/textView3" />
+
+    <EditText
+        android:id="@+id/etSizes"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="26dp"
+        android:layout_marginEnd="23dp"
+        android:layout_marginBottom="16dp"
+        android:ems="10"
+        android:inputType="text"
+        android:text=""
         app:layout_constraintBottom_toTopOf="@+id/spItemFabric"
-        app:layout_constraintEnd_toEndOf="@+id/spItemColor"
-        app:layout_constraintStart_toStartOf="@+id/spItemColor"
+        app:layout_constraintEnd_toStartOf="@+id/spItemSize"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/spItemType" />
 
     <Spinner
         android:id="@+id/spItemFabric"
         android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginBottom="14dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="29dp"
+        android:layout_marginEnd="26dp"
+        android:layout_marginBottom="19dp"
         android:entries="@array/fabricArr"
-        app:layout_constraintBottom_toTopOf="@+id/spItemColor"
-        app:layout_constraintEnd_toEndOf="@+id/spItemSize"
-        app:layout_constraintStart_toStartOf="@+id/spItemColor"
-        app:layout_constraintTop_toBottomOf="@+id/spItemSize" />
-
+        app:layout_constraintBottom_toTopOf="@+id/etColor"
+        app:layout_constraintEnd_toEndOf="@+id/spItemColor"
+        app:layout_constraintStart_toStartOf="@+id/etSizes"
+        app:layout_constraintTop_toBottomOf="@+id/etSizes" />
 
     <Spinner
         android:id="@+id/spItemColor"
-        android:layout_width="274dp"
-        android:layout_height="0dp"
-        android:layout_marginStart="54dp"
-        android:layout_marginBottom="28dp"
+        android:layout_width="0dp"
+        android:layout_height="40dp"
+        android:layout_marginEnd="56dp"
+        android:layout_marginBottom="110dp"
         android:entries="@array/colorArr"
+        app:layout_constraintBottom_toTopOf="@+id/ivD"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/etColor"
+        app:layout_constraintTop_toBottomOf="@+id/spItemSize" />
+
+    <EditText
+        android:id="@+id/etColor"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginBottom="23dp"
+        android:ems="10"
+        android:inputType="text"
+        android:text=""
         app:layout_constraintBottom_toTopOf="@+id/etItemPrice"
+        app:layout_constraintEnd_toStartOf="@+id/spItemColor"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/spItemFabric" />
+
+    <EditText
+        android:id="@+id/etItemPrice"
+        android:layout_width="125dp"
+        android:layout_height="40dp"
+        android:layout_marginBottom="46dp"
+        android:ems="10"
+        android:inputType="number"
+        app:layout_constraintBottom_toTopOf="@+id/btnGalleryD"
+        app:layout_constraintEnd_toEndOf="@+id/spItemFabric"
+        app:layout_constraintStart_toStartOf="@+id/spItemFabric"
+        app:layout_constraintTop_toBottomOf="@+id/etColor" />
+
+    <ImageView
+        android:id="@+id/ivD"
+        android:layout_width="166dp"
+        android:layout_height="95dp"
+        android:layout_marginEnd="38dp"
+        android:layout_marginBottom="170dp"
+        android:layout_weight="1"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/btnGalleryD"
+        app:layout_constraintTop_toBottomOf="@+id/spItemColor" />
 
     <Button
         android:id="@+id/btnGalleryD"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginStart="26dp"
-        android:layout_marginEnd="11dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="28dp"
+        android:layout_marginBottom="6dp"
         android:backgroundTint="#e0cba8"
         android:gravity="center"
         android:text="גלריה"
         android:textSize="20sp"
         app:layout_constraintBottom_toTopOf="@+id/btnTakePicD"
         app:layout_constraintEnd_toStartOf="@+id/ivD"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/etItemPrice" />
 
     <Button
         android:id="@+id/btnTakePicD"
-        android:layout_width="161dp"
-        android:layout_height="49dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:layout_gravity="center"
-        android:layout_marginStart="26dp"
-        android:layout_marginEnd="10dp"
-        android:layout_marginBottom="46dp"
+        android:layout_marginStart="15dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginBottom="48dp"
         android:backgroundTint="#e0cba8"
         android:gravity="center"
         android:text="מצלמה"
@@ -114,18 +175,22 @@
         app:layout_constraintBottom_toTopOf="@+id/etItemDesc"
         app:layout_constraintEnd_toStartOf="@+id/ivD"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ivD" />
+        app:layout_constraintTop_toBottomOf="@+id/btnGalleryD" />
 
-    <ImageView
-        android:id="@+id/ivD"
+    <EditText
+        android:id="@+id/etItemDesc"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginEnd="44dp"
-        android:layout_weight="1"
-        app:layout_constraintBottom_toTopOf="@+id/btnTakePicD"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/btnTakePicD"
-        app:layout_constraintTop_toBottomOf="@+id/etItemPrice" />
+
+        android:layout_marginBottom="6dp"
+        android:ems="10"
+        android:hint="Desc"
+        android:inputType="text"
+        app:layout_constraintBottom_toTopOf="@+id/btnAddItem"
+        app:layout_constraintEnd_toEndOf="@+id/textView3"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="@+id/etItemName"
+        app:layout_constraintTop_toBottomOf="@+id/btnTakePicD" />
 
     <Button
         android:id="@+id/btnAddItem"
@@ -138,32 +203,6 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/etItemDesc"
         app:layout_constraintTop_toBottomOf="@+id/etItemDesc" />
-
-    <EditText
-        android:id="@+id/etItemPrice"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="38dp"
-        android:ems="10"
-        android:inputType="number"
-        app:layout_constraintBottom_toTopOf="@+id/ivD"
-        app:layout_constraintEnd_toEndOf="@+id/etItemName"
-        app:layout_constraintStart_toStartOf="@+id/etItemName"
-        app:layout_constraintTop_toBottomOf="@+id/spItemColor" />
-
-    <EditText
-        android:id="@+id/etItemDesc"
-        android:layout_width="176dp"
-        android:layout_height="0dp"
-
-        android:layout_marginStart="98dp"
-        android:layout_marginBottom="7dp"
-        android:ems="10"
-        android:hint="Desc"
-        android:inputType="text"
-        app:layout_constraintBottom_toTopOf="@+id/btnAddItem"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnTakePicD" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

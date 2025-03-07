@@ -196,17 +196,31 @@ public class DatabaseService {
         getData("items/" + itemId, Item.class, callback);
     }
 
+
     /// get a cart from the database
-    /// @param cartId the id of the cart to get
+    /// @param uid the id of the cart to get
     /// @param callback the callback to call when the operation is completed
     ///                the callback will receive the cart object
     ///               if the operation fails, the callback will receive an exception
     /// @return void
     /// @see DatabaseCallback
     /// @see Cart
-    public void getCart(@NotNull final String cartId, @NotNull final DatabaseCallback<Cart> callback) {
-        getData("carts/" + cartId, Cart.class, callback);
+    public void getCart(@NotNull final  String uid,@NotNull final DatabaseCallback<Cart> callback) {
+        getData("Users/" + uid+"/cart" , Cart.class, callback);
     }
+
+    /// create a new cart in the database
+    /// @param cart the cart object to create
+    /// @param callback the callback to call when the operation is completed
+    ///               the callback will receive void
+    ///              if the operation fails, the callback will receive an exception
+    /// @return void
+    /// @see DatabaseCallback
+    /// @see Cart
+    public void updateCart(@NotNull final Cart cart,String uid ,@Nullable final DatabaseCallback<Void> callback) {
+        writeData("Users/" + uid+"/cart", cart, callback);
+    }
+
 
     /// generate a new id for a new item in the database
     /// @return a new id for the item
@@ -221,7 +235,7 @@ public class DatabaseService {
     /// @see #generateNewId(String)
     /// @see Cart
     public String generateCartId() {
-        return generateNewId("carts");
+        return generateNewId("cart");
     }
 
     /// get all the items from the database

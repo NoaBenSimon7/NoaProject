@@ -13,7 +13,7 @@ public class Cart {
     /// unique id of the cart
     private String id;
 
-    private final ArrayList<Item> items;
+    private final ArrayList<ItemCart> items;
 
     public Cart() {
         items = new ArrayList<>();
@@ -32,40 +32,36 @@ public class Cart {
         this.id = id;
     }
 
-    public void addItem(Item item) {
+    public void addItem(ItemCart item) {
         items.add(item);
     }
 
-    public void addItems(List<Item> items) {
-        this.items.addAll(items);
-    }
 
-    public boolean removeItem(Item item) {
-        return items.remove(item);
-    }
 
-    public Item removeItem(int index) {
+
+
+    public ItemCart removeItem(int index) {
         if (index < 0 || index >= items.size()) {
             return null;
         }
         return items.remove(index);
     }
 
-    public Item getItem(int index) {
+    public ItemCart getItem(int index) {
         if (index < 0 || index >= items.size()) {
             return null;
         }
         return items.get(index);
     }
 
-    public ArrayList<Item> getItems() {
+    public ArrayList<ItemCart> getItems() {
         return items;
     }
 
     public double getTotalPrice() {
         double totalPrice = 0;
-        for (Item item : items) {
-            totalPrice += item.getPrice();
+        for (ItemCart item : items) {
+            totalPrice += item.getItem().getPrice()* item.getAmount();
         }
         return totalPrice;
     }

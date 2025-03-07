@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -55,7 +56,9 @@ public class AddItem extends AppCompatActivity implements View.OnClickListener {
     private ImageView ivItem;
     private DatabaseService databaseService;
 
+    String color="", size="";
 
+    EditText etSize, etColor;
 
 
 
@@ -139,7 +142,8 @@ public class AddItem extends AppCompatActivity implements View.OnClickListener {
         spItemColor=findViewById(R.id.spItemColor);
         btnGoCamera=findViewById(R.id.btnTakePicD);
         btnGoGallery=findViewById(R.id.btnGalleryD);
-
+        etColor=findViewById(R.id.etColor);
+        etSize=findViewById(R.id.etSizes);
         etItemDesc=findViewById(R.id.etItemDesc);
 
         btnGoGallery.setOnClickListener(this);
@@ -148,6 +152,34 @@ public class AddItem extends AppCompatActivity implements View.OnClickListener {
         /// set the on click listeners
 
         btnAddItem.setOnClickListener(this);
+
+        spItemSize.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+
+                size+=parent.getItemAtPosition(position)+", ";
+                etSize.setText(size);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+        spItemColor.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                color+=parent.getItemAtPosition(position)+", ";
+                etColor.setText(color);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
 
 
 
@@ -182,8 +214,9 @@ public class AddItem extends AppCompatActivity implements View.OnClickListener {
         String priceText = etItemPrice.getText().toString();
         String itemName = etItemName.getText().toString();
         String type = spItemType.getSelectedItem().toString();
-        String size = spItemSize.getSelectedItem().toString();
-        String color = spItemColor.getSelectedItem().toString();
+
+         color = etColor.getText().toString() ;
+        size = etSize.getText().toString() ;
         String fabric = spItemFabric.getSelectedItem().toString();
         String desc= etItemDesc.getText().toString();
         String  imageRef = ImageUtil.convertTo64Base(ivItem);
