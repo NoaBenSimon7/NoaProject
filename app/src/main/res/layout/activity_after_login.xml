@@ -36,13 +36,13 @@
         android:text="הסל שלי "
         android:textStyle="bold"
         android:textSize="20dp"
-        app:layout_constraintBottom_toTopOf="@+id/btnGoPersonalArea"
+        app:layout_constraintBottom_toTopOf="@+id/btnGoPersonal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btnGoStore2" />
 
     <Button
-        android:id="@+id/btnGoPersonalArea"
+        android:id="@+id/btnGoPersonal"
         android:layout_width="309dp"
         android:layout_height="57dp"
         android:layout_marginStart="49dp"

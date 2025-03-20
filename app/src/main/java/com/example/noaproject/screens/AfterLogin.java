@@ -30,9 +30,8 @@ public class AfterLogin extends AppCompatActivity implements View.OnClickListene
 
 
         btnGoStore2=findViewById(R.id.btnGoStore2);
-        // btnGoAddItem2=findViewById(R.id.btnGoAddItem2);
         btnGoWishList=findViewById(R.id.btnGoMyCart);
-        btnGoPersonal=findViewById(R.id.btnGoPersonalArea);
+        btnGoPersonal=findViewById(R.id.btnGoPersonal);
 
         //   if(Login.theUser != null)
         //     tvHello.setText(" שלום "+Login.theUser.getfName());
@@ -60,7 +59,10 @@ public class AfterLogin extends AppCompatActivity implements View.OnClickListene
             Intent go=new Intent(this, ShowItems.class);
             startActivity(go);
         }
-
+        if(v==btnGoPersonal){
+            Intent personal=new Intent(this, UpdateUserActivity.class);
+            startActivity(personal);
+        }
 
     }
 
