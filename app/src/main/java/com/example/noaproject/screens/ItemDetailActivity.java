@@ -164,7 +164,10 @@ public class ItemDetailActivity extends AppCompatActivity implements View.OnClic
         databaseService.getCart(AuthenticationService.getInstance().getCurrentUserId(), new DatabaseService.DatabaseCallback<Cart>() {
             @Override
             public void onCompleted(Cart cart) {
-                ItemDetailActivity.this.cart = cart;
+                if(cart==null)
+                {    ItemDetailActivity.this.cart=new Cart();}
+
+              else   ItemDetailActivity.this.cart = cart;
             }
 
             @Override

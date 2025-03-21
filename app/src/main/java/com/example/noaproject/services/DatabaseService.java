@@ -206,7 +206,7 @@ public class DatabaseService {
     /// @see DatabaseCallback
     /// @see Cart
     public void getCart(@NotNull final  String uid,@NotNull final DatabaseCallback<Cart> callback) {
-        getData("Users/" + uid+"/cart" , Cart.class, callback);
+        getData("UsersCart/" + uid, Cart.class, callback);
     }
 
     /// create a new cart in the database
@@ -218,7 +218,7 @@ public class DatabaseService {
     /// @see DatabaseCallback
     /// @see Cart
     public void updateCart(@NotNull final Cart cart,String uid ,@Nullable final DatabaseCallback<Void> callback) {
-        writeData("Users/" + uid+"/cart", cart, callback);
+        writeData("UsersCart/" + uid, cart, callback);
     }
 
 

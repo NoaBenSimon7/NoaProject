@@ -8,7 +8,7 @@ import android.widget.Toast;
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.SearchView;
+import android.widget.SearchView;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
@@ -89,8 +89,8 @@ public class SearchUsers extends AppCompatActivity {
                             // You can customize the detail format as needed
                             String userDetail = "👤 " + user.getFname() + " " + user.getLname() +
                                     "\n📧 Email: " + user.getEmail() +
-                                    "\n📞 Phone: " + user.getPhone() +
-                                    "\n--------------------------";
+                                    "\n📞 Phone: " + user.getPhone() ;
+
                             userList.add(userDetail);  // Add the formatted user details to the list
                         }
                     }

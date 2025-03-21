@@ -7,36 +7,72 @@ import android.widget.EditText;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import com.example.noaproject.R;
+import com.example.noaproject.models.Item;
 import com.example.noaproject.models.User;
+import com.example.noaproject.services.AuthenticationService;
+import com.example.noaproject.services.DatabaseService;
+import com.example.noaproject.utils.SharedPreferencesUtil;
+
+import java.util.List;
 
 public class UpdateUserActivity extends AppCompatActivity {
 
-    private EditText editFname, editLname, editEmail, editPhone, editPassword;
+    private EditText editFname, editLname, editPhone;
     private Button btnUpdate;
-    private User currentUser; // Assume this user is fetched from the database or session
+    private User currentUser=null; // Assume this user is fetched from the database or session
+    private AuthenticationService authenticationService;
+
+    DatabaseService databaseService;
+    private String uid;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_update_user);
+        // get the instance of the authentication service
+        authenticationService = AuthenticationService.getInstance();
+        databaseService=DatabaseService.getInstance();
+        uid=authenticationService.getCurrentUserId();
+
+
+
+        // Retrieve the user data from SharedPreferences
+
+
+     databaseService.getUser(uid, new DatabaseService.DatabaseCallback<User>() {
+            @Override
+            public void onCompleted(User object) {
+
+                currentUser=object;
+
+                editFname.setText(currentUser.getFname());
+                editLname.setText(currentUser.getLname());
+               // editEmail.setText(currentUser.getEmail());
+                editPhone.setText(currentUser.getPhone());
+
+
+            }
+
+            @Override
+            public void onFailed(Exception e) {
+
+            }
+        });
+
+
+
+
 
         // Initialize views
         editFname = findViewById(R.id.editFname);
         editLname = findViewById(R.id.editLname);
-        editEmail = findViewById(R.id.editEmail);
+
         editPhone = findViewById(R.id.editPhone);
-        editPassword = findViewById(R.id.editPassword);
+
         btnUpdate = findViewById(R.id.btnUpdate);
 
-        // Assuming currentUser is the user fetched from a database or session
-        currentUser = new User("1", "John", "Doe", "john.doe@example.com", "1234567890", "password123");
 
-        // Populate the fields with the current user's details
-        editFname.setText(currentUser.getFname());
-        editLname.setText(currentUser.getLname());
-        editEmail.setText(currentUser.getEmail());
-        editPhone.setText(currentUser.getPhone());
-        editPassword.setText(currentUser.getPassword());
+
 
         // Set up the update button click listener
         btnUpdate.setOnClickListener(new View.OnClickListener() {
@@ -45,12 +81,12 @@ public class UpdateUserActivity extends AppCompatActivity {
                 // Get the updated details from the EditTexts
                 String updatedFname = editFname.getText().toString();
                 String updatedLname = editLname.getText().toString();
-                String updatedEmail = editEmail.getText().toString();
+
                 String updatedPhone = editPhone.getText().toString();
-                String updatedPassword = editPassword.getText().toString();
+
 
                 // Validate input
-                if (updatedFname.isEmpty() || updatedLname.isEmpty() || updatedEmail.isEmpty() || updatedPhone.isEmpty() || updatedPassword.isEmpty()) {
+                if (updatedFname.isEmpty() || updatedLname.isEmpty()  || updatedPhone.isEmpty() ) {
                     Toast.makeText(UpdateUserActivity.this, "Please fill in all fields", Toast.LENGTH_SHORT).show();
                     return;
                 }
@@ -58,9 +94,9 @@ public class UpdateUserActivity extends AppCompatActivity {
                 // Update the currentUser with the new values
                 currentUser.setFname(updatedFname);
                 currentUser.setLname(updatedLname);
-                currentUser.setEmail(updatedEmail);
+
                 currentUser.setPhone(updatedPhone);
-                currentUser.setPassword(updatedPassword);
+
 
                 // Call method to save the updated user (e.g., save to database, shared preferences, etc.)
                 updateUserDetails(currentUser);
@@ -75,16 +111,17 @@ public class UpdateUserActivity extends AppCompatActivity {
     }
 
     private void updateUserDetails(User updatedUser) {
-        // Implement the logic to save the updated user details (e.g., save to database, shared preferences, etc.)
-        // For example, if you're using shared preferences:
-        // SharedPreferences sharedPreferences = getSharedPreferences("userPrefs", MODE_PRIVATE);
-        // SharedPreferences.Editor editor = sharedPreferences.edit();
-        // editor.putString("user_id", updatedUser.getId());
-        // editor.putString("user_fname", updatedUser.getFname());
-        // editor.putString("user_lname", updatedUser.getLname());
-        // editor.putString("user_email", updatedUser.getEmail());
-        // editor.putString("user_phone", updatedUser.getPhone());
-        // editor.putString("user_password", updatedUser.getPassword());
-        // editor.apply();
+        databaseService.createNewUser(updatedUser, new DatabaseService.DatabaseCallback<Void>() {
+            @Override
+            public void onCompleted(Void object) {
+
+            }
+
+            @Override
+            public void onFailed(Exception e) {
+
+            }
+        });
+
     }
 }
