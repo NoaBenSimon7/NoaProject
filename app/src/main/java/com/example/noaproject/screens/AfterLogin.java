@@ -64,7 +64,7 @@ public class AfterLogin extends AppCompatActivity implements View.OnClickListene
             startActivity(personal);
         }
         if(v==btnGoWishList){
-            Intent personal=new Intent(this, WishList.class);
+            Intent personal=new Intent(this, CartActivity.class);
             startActivity(personal);
         }
 

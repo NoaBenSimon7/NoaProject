@@ -165,8 +165,8 @@ public class DatabaseService {
     /// @return void
     /// @see DatabaseCallback
     /// @see Cart
-    public void createNewCart(@NotNull final Cart cart, @Nullable final DatabaseCallback<Void> callback) {
-        writeData("carts/" + cart.getId(), cart, callback);
+    public void createNewCart( @NotNull final String uid,  @NotNull final Cart cart, @Nullable final DatabaseCallback<Void> callback) {
+        writeData("UsersCart/" + uid, cart, callback);
     }
 
 

@@ -11,7 +11,7 @@ import java.util.List;
 public class Cart {
 
     /// unique id of the cart
-    private String id;
+
 
     private final ArrayList<ItemCart> items;
 
@@ -19,18 +19,11 @@ public class Cart {
         items = new ArrayList<>();
     }
 
-    public Cart(String id) {
-        this.id = id;
-        items = new ArrayList<>();
+    public Cart(ArrayList<ItemCart> items) {
+        this.items = items;
     }
 
-    public String getId() {
-        return id;
-    }
 
-    public void setId(String id) {
-        this.id = id;
-    }
 
     public void addItem(ItemCart item) {
         items.add(item);
@@ -74,7 +67,7 @@ public class Cart {
     @Override
     public String toString() {
         return "Cart{" +
-                "id='" + id + '\'' +
+
                 ", items=" + items +
                 '}';
     }

@@ -65,17 +65,7 @@ public class ItemDetailActivity extends AppCompatActivity implements View.OnClic
 
         authenticationService= AuthenticationService.getInstance();
         uid=authenticationService.getCurrentUserId();
-        databaseService.getUser(uid, new DatabaseService.DatabaseCallback<User>() {
-            @Override
-            public void onCompleted(User object) {
-                user=object;
-            }
 
-            @Override
-            public void onFailed(Exception e) {
-
-            }
-        });
 
         fetchCartFromFirebase();
 
@@ -161,18 +151,20 @@ public class ItemDetailActivity extends AppCompatActivity implements View.OnClic
 
     private void fetchCartFromFirebase() {
 
-        databaseService.getCart(AuthenticationService.getInstance().getCurrentUserId(), new DatabaseService.DatabaseCallback<Cart>() {
+        databaseService.getCart(uid, new DatabaseService.DatabaseCallback<Cart>() {
             @Override
-            public void onCompleted(Cart cart) {
-                if(cart==null)
-                {    ItemDetailActivity.this.cart=new Cart();}
+            public void onCompleted(Cart cart2) {
 
-              else   ItemDetailActivity.this.cart = cart;
+                cart=cart2;
+                if(cart==null)
+                {   cart=new Cart();}
+
+
             }
 
             @Override
             public void onFailed(Exception e) {
-
+              cart=new Cart();
             }
         });
 
@@ -190,7 +182,7 @@ public class ItemDetailActivity extends AppCompatActivity implements View.OnClic
         Toast.makeText(ItemDetailActivity.this, "המוצר נוסף לעגלה", Toast.LENGTH_SHORT).show();
 
 
-        databaseService.updateCart(this.cart, user.getId(), new DatabaseService.DatabaseCallback<Void>() {
+        databaseService.updateCart(cart, user.getId(), new DatabaseService.DatabaseCallback<Void>() {
             @Override
             public void onCompleted(Void object) {
                 updateTotalPrice();  // עדכון המחיר הכולל
