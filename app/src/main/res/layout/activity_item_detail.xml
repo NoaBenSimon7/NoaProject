@@ -11,7 +11,8 @@
         android:id="@+id/item_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="48dp"
         android:layout_marginBottom="9dp"
         android:paddingTop="16dp"
         android:text="Item Name"
@@ -22,25 +23,25 @@
 
     <ImageView
         android:id="@+id/item_image"
-        android:layout_width="361dp"
+        android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginTop="68dp"
+        android:layout_marginStart="10dp"
         android:layout_marginEnd="8dp"
-        android:layout_marginBottom="270dp"
         android:src="@drawable/ic_launcher_background"
-        app:layout_constraintBottom_toTopOf="@+id/imbMinus"
+        app:layout_constraintBottom_toTopOf="@+id/item_type"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintStart_toStartOf="@+id/item_name"
+        app:layout_constraintTop_toBottomOf="@+id/item_name" />
 
     <TextView
         android:id="@+id/item_type"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginStart="32dp"
+        android:layout_marginStart="64dp"
         android:layout_marginEnd="57dp"
-        android:layout_marginBottom="19dp"
+        android:layout_marginBottom="40dp"
         android:text="Type"
-        app:layout_constraintBottom_toTopOf="@+id/item_desc"
+        app:layout_constraintBottom_toTopOf="@+id/spColorDetail"
         app:layout_constraintEnd_toStartOf="@+id/item_price"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/item_image" />
@@ -50,44 +51,50 @@
         android:layout_width="0dp"
         android:layout_height="34dp"
 
+        android:layout_marginTop="22dp"
         android:layout_marginEnd="136dp"
+        android:layout_marginBottom="22dp"
         android:text="Price"
         app:layout_constraintBottom_toBottomOf="@+id/item_type"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/item_type"
-        app:layout_constraintStart_toStartOf="@+id/spColorDetail"
-        app:layout_constraintTop_toTopOf="@+id/item_type" />
+        app:layout_constraintTop_toBottomOf="@+id/item_image" />
 
     <TextView
         android:id="@+id/item_desc"
-        android:layout_width="124dp"
-        android:layout_height="0dp"
-        android:layout_marginBottom="334dp"
+        android:layout_width="0dp"
+        android:layout_height="78dp"
+        android:layout_marginStart="64dp"
+        android:layout_marginEnd="32dp"
         android:text="Description"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/item_type"
-        app:layout_constraintTop_toBottomOf="@+id/item_type" />
+        app:layout_constraintEnd_toStartOf="@+id/spColorDetail"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Spinner
         android:id="@+id/spColorDetail"
-        android:layout_width="140dp"
-        android:layout_height="37dp"
-        android:layout_marginStart="32dp"
-        app:layout_constraintBottom_toBottomOf="@+id/item_desc"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginEnd="51dp"
+        android:layout_marginBottom="49dp"
+        app:layout_constraintBottom_toTopOf="@+id/item_fabric"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/item_desc"
-        app:layout_constraintTop_toTopOf="@+id/item_desc" />
+        app:layout_constraintTop_toBottomOf="@+id/item_type" />
 
     <TextView
         android:id="@+id/item_fabric"
-        android:layout_width="0dp"
-        android:layout_height="28dp"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="28dp"
+        android:layout_width="92dp"
+        android:layout_height="24dp"
+        android:layout_marginStart="64dp"
         android:layout_marginEnd="44dp"
+        android:layout_marginBottom="78dp"
         android:text="Fabric"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout3"
         app:layout_constraintEnd_toStartOf="@+id/spSizeDetail"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/item_desc" />
+        app:layout_constraintTop_toBottomOf="@+id/spColorDetail" />
 
     <Spinner
         android:id="@+id/spSizeDetail"
@@ -95,57 +102,55 @@
         android:layout_height="35dp"
         android:layout_marginTop="20dp"
         android:layout_marginEnd="94dp"
+        android:layout_marginBottom="22dp"
+        app:layout_constraintBottom_toBottomOf="@+id/item_fabric"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/item_fabric"
         app:layout_constraintTop_toBottomOf="@+id/spColorDetail" />
 
-    <ImageButton
-        android:id="@+id/imbPlus"
+    <LinearLayout
+        android:id="@+id/linearLayout3"
         android:layout_width="0dp"
         android:layout_height="0dp"
-
-        android:layout_marginTop="567dp"
-        android:layout_marginEnd="25dp"
-        android:layout_marginBottom="64dp"
-        android:src="@drawable/picminusss"
+        android:layout_marginStart="2dp"
+        android:layout_marginEnd="2dp"
+        android:layout_marginBottom="85dp"
+        android:orientation="horizontal"
         app:layout_constraintBottom_toTopOf="@+id/btnAddToCart"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/tvAmont"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintEnd_toEndOf="@+id/item_fabric"
+        app:layout_constraintStart_toStartOf="@+id/item_fabric"
+        app:layout_constraintTop_toBottomOf="@+id/item_fabric">
 
-    <TextView
-        android:id="@+id/tvAmont"
-        android:layout_width="0dp"
-        android:layout_height="61dp"
-        android:layout_marginEnd="22dp"
-        android:layout_marginBottom="1dp"
-        android:text=""
-        app:layout_constraintBottom_toBottomOf="@+id/imbMinus"
-        app:layout_constraintEnd_toStartOf="@+id/imbPlus"
-        app:layout_constraintStart_toEndOf="@+id/imbMinus" />
+        <ImageButton
+            android:id="@+id/imbPlus"
+            android:layout_width="30dp"
+            android:layout_height="match_parent"
 
-    <ImageButton
-        android:id="@+id/imbMinus"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginStart="172dp"
-        android:layout_marginEnd="34dp"
-        android:layout_marginBottom="118dp"
-        android:src="@drawable/picplus"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/tvAmont"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/item_image" />
+            android:src="@drawable/picminusss" />
+
+        <TextView
+            android:id="@+id/tvAmont"
+            android:layout_width="30dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:text="0" />
+
+        <ImageButton
+            android:id="@+id/imbMinus"
+            android:layout_width="30dp"
+            android:layout_height="match_parent"
+            android:src="@drawable/picplus" />
+    </LinearLayout>
 
     <Button
         android:id="@+id/btnAddToCart"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
+        android:layout_marginEnd="15dp"
         android:layout_marginBottom="16dp"
         android:text="הוספה לסל"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imbPlus" />
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout3" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

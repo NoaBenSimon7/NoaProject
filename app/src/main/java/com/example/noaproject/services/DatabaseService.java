@@ -6,6 +6,7 @@ import androidx.annotation.Nullable;
 
 import com.example.noaproject.models.Cart;
 import com.example.noaproject.models.Item;
+import com.example.noaproject.models.Order;
 import com.example.noaproject.models.User;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -230,13 +231,7 @@ public class DatabaseService {
         return generateNewId("items");
     }
 
-    /// generate a new id for a new cart in the database
-    /// @return a new id for the cart
-    /// @see #generateNewId(String)
-    /// @see Cart
-    public String generateCartId() {
-        return generateNewId("cart");
-    }
+
 
     /// get all the items from the database
     /// @param callback the callback to call when the operation is completed
@@ -265,6 +260,39 @@ public class DatabaseService {
         });
     }
 
+
+
+    /// create a new item in the database
+    /// @param item the item object to create
+    /// @param callback the callback to call when the operation is completed
+    ///              the callback will receive void
+    ///             if the operation fails, the callback will receive an exception
+    /// @return void
+    /// @see DatabaseCallback
+    /// @see Item
+    public void createNewOreder(@NotNull final Order order, @Nullable final DatabaseCallback<Void> callback) {
+        writeData("Orders/" + order.getOrderId(), order, callback);
+        writeData("UserOrders/" +order.getUser().getId()+"/"+ order.getOrderId(), order, callback);
+
+    }
+
+
+
+
+
+
+    /// generate a new id for a new item in the database
+    /// @return a new id for the item
+    /// @see #generateNewId(String)
+    /// @see Item
+    public String generateOrderId() {
+        return generateNewId("Orders");
+    }
+
+
+
+
+
     /// get all the users from the database
     /// @param callback the callback to call when the operation is completed
     ///              the callback will receive a list of item objects
@@ -291,6 +319,14 @@ public class DatabaseService {
             callback.onCompleted(users);
         });
     }
+
+
+    public void updateItem(@NotNull final Item item,  @Nullable final DatabaseCallback<Void> callback) {
+        writeData("items/" + item.getId(), item, callback);
+    }
+
+
+
 
 
 

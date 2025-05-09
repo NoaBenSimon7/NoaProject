@@ -1,6 +1,8 @@
 package com.example.noaproject.models;
 
-public class ItemCart {
+import java.io.Serializable;
+
+public class ItemCart implements Serializable {
 
     Item item;
     int amount;

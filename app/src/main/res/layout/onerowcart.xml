@@ -8,75 +8,73 @@
     <View
         android:id="@+id/view7cart"
 
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginBottom="9dp"
-        android:background="#bf8c5e"
-        app:layout_constraintBottom_toTopOf="@+id/tvItemName"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_width="411dp"
+        android:layout_height="32dp"
+        android:background="#bf8c5e" />
 
 
     <TextView
         android:id="@+id/tvItemName"
 
-        android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_width="123dp"
+        android:layout_height="32dp"
         android:text="TextView"
         android:textSize="15dp"
-        app:layout_constraintBottom_toTopOf="@+id/tvItemPriceCart"
-        app:layout_constraintEnd_toStartOf="@+id/btnGoToDetailsCart"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/view7cart" />
+        tools:layout_editor_absoluteY="41dp" />
 
     <TextView
         android:id="@+id/tvItemPriceCart"
 
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginEnd="10dp"
-        android:layout_marginBottom="14dp"
+        android:layout_width="129dp"
+        android:layout_height="32dp"
         android:text="TextView"
-        app:layout_constraintBottom_toTopOf="@+id/btnGoToDetailsCart"
-        app:layout_constraintEnd_toStartOf="@+id/tvItemAmountCart"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvItemName" />
+        tools:layout_editor_absoluteY="73dp" />
 
     <ImageView
         android:id="@+id/ivItemImageRefCart"
 
 
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginEnd="39dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/btnGoToDetailsCart"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <Button
-        android:id="@+id/btnGoToDetailsCart"
-
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginEnd="5dp"
-        android:backgroundTint="#d8c6b6"
-        android:text="צפייה"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/ivItemImageRefCart"
-        app:layout_constraintStart_toEndOf="@+id/tvItemName"
-        app:layout_constraintTop_toBottomOf="@+id/tvItemPriceCart" />
+        android:layout_width="110dp"
+        android:layout_height="148dp"
+        tools:layout_editor_absoluteX="263dp" />
 
     <TextView
         android:id="@+id/tvItemAmountCart"
         android:layout_width="97dp"
         android:layout_height="25dp"
-        android:layout_marginEnd="14dp"
         android:text="1"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/ivItemImageRefCart"
-        app:layout_constraintTop_toTopOf="parent" />
+        tools:layout_editor_absoluteX="139dp"
+        tools:layout_editor_absoluteY="62dp" />
+
+    <LinearLayout
+        android:layout_width="159dp"
+        android:layout_height="45dp"
+        android:orientation="horizontal"
+        tools:layout_editor_absoluteX="93dp"
+        tools:layout_editor_absoluteY="104dp">
+
+        <Button
+            android:id="@+id/btnPlus"
+
+            android:layout_width="40dp"
+            android:layout_height="match_parent"
+            android:backgroundTint="#d8c6b6"
+            android:text="צפייה" />
+
+        <Button
+            android:id="@+id/btnMinus"
+            android:layout_width="40dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="Button" />
+
+        <Button
+            android:id="@+id/btnDel"
+            android:layout_width="40dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="Button" />
+    </LinearLayout>
 
     <!-- כפתור הוספה -->
 

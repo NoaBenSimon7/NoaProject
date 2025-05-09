@@ -2,6 +2,7 @@ package com.example.noaproject.screens;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -16,6 +17,8 @@ import com.example.noaproject.adapters.CartAdapter;
 import com.example.noaproject.adapters.ItemsAdapter;
 import com.example.noaproject.models.Cart;
 import com.example.noaproject.models.Item;
+import com.example.noaproject.models.Order;
+import com.example.noaproject.models.User;
 import com.example.noaproject.services.AuthenticationService;
 import com.example.noaproject.services.DatabaseService;
 
@@ -32,6 +35,7 @@ public class CartActivity extends AppCompatActivity {
     private DatabaseService databaseService;
     private AuthenticationService authenticationService;
     private String uid;
+    private User user=null;
 
 
     @Override
@@ -54,7 +58,7 @@ public class CartActivity extends AppCompatActivity {
         // Set up RecyclerView for displaying items
         RecyclerView selectedItemsRecyclerView = findViewById(R.id.rcCart);
 
-        cartAdapter = new CartAdapter(cart);
+        cartAdapter = new CartAdapter(CartActivity.this,cart);
         selectedItemsRecyclerView.setAdapter(cartAdapter);
 
         selectedItemsRecyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -69,7 +73,7 @@ public class CartActivity extends AppCompatActivity {
                     cart=new Cart();
                 else{
 
-                cartAdapter = new CartAdapter(cart);
+
                 cartAdapter.notifyDataSetChanged();
 
                 }
@@ -84,7 +88,71 @@ public class CartActivity extends AppCompatActivity {
         } );
 
 
+
+        databaseService.getUser(uid, new DatabaseService.DatabaseCallback<User>() {
+            @Override
+            public void onCompleted(User object) {
+                user=new User(object);
+            }
+
+            @Override
+            public void onFailed(Exception e) {
+
+            }
+        });
+
+
+
         // Adapter for item spinner - This part is commented out, but you can add a spinner logic here
         // @see ItemSpinnerAdapter
     }
+
+    private void processOrder() {
+        if (cart == null || cart.getItems().isEmpty()) {
+            Toast.makeText(this, "העגלה ריקה!", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        String orderId=databaseService.generateOrderId();
+        Order order = new Order(orderId, cart.getItems(),  cart.getTotalCart(), "new",  user,  0);
+
+        order.setTimestamp(System.currentTimeMillis());
+        databaseService.createNewOreder(order, new DatabaseService.DatabaseCallback<Void>() {
+            @Override
+            public void onCompleted(Void object) {
+                Toast.makeText(CartActivity.this, "הזמנה נשמרה!", Toast.LENGTH_SHORT).show();
+                cart=new Cart();
+
+                goUpdateCart(cart);
+
+
+            }
+
+            @Override
+            public void onFailed(Exception e) {
+                Toast.makeText(CartActivity.this, "שגיאה בשמירת ההזמנה", Toast.LENGTH_SHORT).show();
+
+            }
+        });
+
+
+    }
+
+
+    public void goUpdateCart(Cart cart){
+        databaseService.updateCart(cart, uid, new DatabaseService.DatabaseCallback<Void>() {
+            @Override
+            public void onCompleted(Void object) {
+
+            }
+
+            @Override
+            public void onFailed(Exception e) {
+
+            }
+        });
+
+
+    }
+
 }

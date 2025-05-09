@@ -18,6 +18,18 @@ public class User {
     }
 
 
+    public User(User user) {
+        this.id = user.id;
+        this.fname = user.fname;
+        this.lname = user.lname;
+        this.email = user.email;
+        this.phone = user.phone;
+
+
+    }
+
+
+
     public User() {
     }
 

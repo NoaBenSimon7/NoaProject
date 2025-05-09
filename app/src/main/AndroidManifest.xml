@@ -33,9 +33,7 @@
         <activity
             android:name=".screens.AllOrders"
             android:exported="false" />
-        <activity
-            android:name=".screens.MyCart"
-            android:exported="false" />
+
         <activity
             android:name=".screens.MyService"
             android:exported="false" />
@@ -54,6 +52,7 @@
         <activity
             android:name=".screens.Login"
             android:exported="false" />
+
         <activity
             android:name=".screens.MainActivity"
             android:exported="true">

@@ -54,6 +54,8 @@ public class ItemDetailActivity extends AppCompatActivity implements View.OnClic
     TextView tvAmount;
     private Item item;
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -172,20 +174,19 @@ public class ItemDetailActivity extends AppCompatActivity implements View.OnClic
 
 
     // הוספת מוצר לעגלה
-    public void addItemToCart(ItemCart item) {
-
-        if(user==null){
-            return;
-        }
-        this.cart.addItem(item);
-
-        Toast.makeText(ItemDetailActivity.this, "המוצר נוסף לעגלה", Toast.LENGTH_SHORT).show();
+    public void addItemToCart(ItemCart itemCart) {
 
 
-        databaseService.updateCart(cart, user.getId(), new DatabaseService.DatabaseCallback<Void>() {
+        cart.addItemToCart(itemCart);
+
+        Toast.makeText(ItemDetailActivity.this, cart.getItems().toString()+"  ", Toast.LENGTH_SHORT).show();
+
+
+        databaseService.updateCart(cart, uid, new DatabaseService.DatabaseCallback<Void>() {
             @Override
             public void onCompleted(Void object) {
                 updateTotalPrice();  // עדכון המחיר הכולל
+                Toast.makeText(ItemDetailActivity.this, " לעגלה", Toast.LENGTH_SHORT).show();
 
             }
 
