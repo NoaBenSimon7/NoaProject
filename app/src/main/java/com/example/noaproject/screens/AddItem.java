@@ -223,7 +223,7 @@ public class AddItem extends AppCompatActivity implements View.OnClickListener {
 
         /// validate the input
         /// stop if the input is not valid
-      //  if (!isValid(name, priceText, imageRef)) return;
+        if (!isValid(name, priceText, imageRef)) return;
 
         /// convert the price to double
         double price = Double.parseDouble(priceText);

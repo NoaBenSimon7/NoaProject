@@ -1,81 +1,75 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="150dp">
+    android:layout_height="wrap_content"
+    android:padding="8dp">
 
-    <View
-        android:id="@+id/view7cart"
-
-        android:layout_width="411dp"
-        android:layout_height="32dp"
-        android:background="#bf8c5e" />
-
+    <ImageView
+        android:id="@+id/ivItemImageRef"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:scaleType="centerCrop"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
         android:id="@+id/tvItemName"
-
-        android:layout_width="123dp"
-        android:layout_height="32dp"
-        android:text="TextView"
-        android:textSize="15dp"
-        tools:layout_editor_absoluteY="41dp" />
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="שם המוצר"
+        android:textStyle="bold"
+        android:textSize="16sp"
+        app:layout_constraintStart_toEndOf="@id/ivItemImageRef"
+        app:layout_constraintTop_toTopOf="@id/ivItemImageRef"
+        app:layout_constraintEnd_toStartOf="@id/btnDel"
+        android:layout_marginStart="8dp" />
 
     <TextView
-        android:id="@+id/tvItemPriceCart"
-
-        android:layout_width="129dp"
-        android:layout_height="32dp"
-        android:text="TextView"
-        tools:layout_editor_absoluteY="73dp" />
-
-    <ImageView
-        android:id="@+id/ivItemImageRefCart"
-
-
-        android:layout_width="110dp"
-        android:layout_height="148dp"
-        tools:layout_editor_absoluteX="263dp" />
+        android:id="@+id/tvItemPrice"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="מחיר: ₪0"
+        android:textSize="14sp"
+        app:layout_constraintTop_toBottomOf="@id/tvItemName"
+        app:layout_constraintStart_toStartOf="@id/tvItemName"
+        app:layout_constraintEnd_toEndOf="@id/tvItemName" />
 
     <TextView
         android:id="@+id/tvItemAmountCart"
-        android:layout_width="97dp"
-        android:layout_height="25dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:text="1"
-        tools:layout_editor_absoluteX="139dp"
-        tools:layout_editor_absoluteY="62dp" />
+        android:textSize="16sp"
+        app:layout_constraintTop_toBottomOf="@id/tvItemPrice"
+        app:layout_constraintStart_toStartOf="@id/tvItemName"
+        android:layout_marginTop="4dp" />
 
-    <LinearLayout
-        android:layout_width="159dp"
-        android:layout_height="45dp"
-        android:orientation="horizontal"
-        tools:layout_editor_absoluteX="93dp"
-        tools:layout_editor_absoluteY="104dp">
+    <Button
+        android:id="@+id/btnPlus"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:text="+"
+        app:layout_constraintTop_toTopOf="@id/tvItemAmountCart"
+        app:layout_constraintStart_toEndOf="@id/tvItemAmountCart"
+        android:layout_marginStart="8dp" />
 
-        <Button
-            android:id="@+id/btnPlus"
+    <Button
+        android:id="@+id/btnMinus"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:text="-"
+        app:layout_constraintTop_toTopOf="@id/btnPlus"
+        app:layout_constraintStart_toEndOf="@id/btnPlus"
+        android:layout_marginStart="4dp" />
 
-            android:layout_width="40dp"
-            android:layout_height="match_parent"
-            android:backgroundTint="#d8c6b6"
-            android:text="צפייה" />
-
-        <Button
-            android:id="@+id/btnMinus"
-            android:layout_width="40dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:text="Button" />
-
-        <Button
-            android:id="@+id/btnDel"
-            android:layout_width="40dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:text="Button" />
-    </LinearLayout>
-
-    <!-- כפתור הוספה -->
+    <Button
+        android:id="@+id/btnDel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="X"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

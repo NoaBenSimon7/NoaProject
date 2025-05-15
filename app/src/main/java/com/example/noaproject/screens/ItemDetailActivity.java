@@ -88,7 +88,7 @@ public class ItemDetailActivity extends AppCompatActivity implements View.OnClic
 
         btnAddToCart=findViewById(R.id.btnAddToCart);
         btnAddToCart.setOnClickListener(this);
-
+        totalPriceText=findViewById(R.id.item_price);
         btnMinus=findViewById(R.id.imbMinus);
         btnMinus.setOnClickListener(this);
         btnPlus=findViewById(R.id.imbPlus);

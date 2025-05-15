@@ -47,7 +47,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             startActivity(goReg);
         }
 
-        else{
+        else if(v == btnLog1){
             Intent goLog=new Intent(MainActivity.this, Register.class);
             startActivity(goLog);
         }

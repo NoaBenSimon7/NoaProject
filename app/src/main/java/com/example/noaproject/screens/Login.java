@@ -45,11 +45,13 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
         initViews();
 
         // Retrieve the user data from SharedPreferences
-        user = SharedPreferencesUtil.getUser(Login.this);
+        user = SharedPreferencesUtil.getUser(this);
+        if (user != null) {
+            // Populate the email and password fields with the current user data
+            etEmail.setText(user.getEmail());
+            etPassword.setText(user.getPassword());
+        }
 
-        // Populate the email and password fields with the current user data
-        etEmail.setText(user.getEmail());
-        etPassword.setText(user.getPassword());
     }
 
     private void initViews() {
