@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.activity.EdgeToEdge;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
@@ -12,10 +13,13 @@ import androidx.core.view.WindowInsetsCompat;
 import com.example.noaproject.R;
 import com.example.noaproject.adapters.ItemsAdapter;
 import com.example.noaproject.models.Item;
+import com.example.noaproject.services.AuthenticationService;
 import com.example.noaproject.services.DatabaseService;
+import com.google.firebase.auth.FirebaseAuth;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Spinner;
@@ -38,6 +42,7 @@ public class ShowItems extends AppCompatActivity implements View.OnClickListener
     private final List<Item> allItem = new ArrayList<>();
 
     private DatabaseService databaseService;
+    private FirebaseAuth mAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +56,8 @@ public class ShowItems extends AppCompatActivity implements View.OnClickListener
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+        mAuth= FirebaseAuth.getInstance();
+
 
         // Initialize the database service
         databaseService = DatabaseService.getInstance();
@@ -92,7 +99,37 @@ public class ShowItems extends AppCompatActivity implements View.OnClickListener
         startActivity(goReg);
 
     }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.main_menu,menu);
+        return true;
+    }
 
-    // Optionally, you can handle the item click directly in this activity,
-    // but since it's done in the adapter itself, you don't need to add click handling here.
+    @Override
+    public void onPointerCaptureChanged(boolean hasCapture) {
+        super.onPointerCaptureChanged(hasCapture);
+    }
+    @Override
+    public boolean onOptionsItemSelected(@NonNull android.view.MenuItem item) {
+        int id = item.getItemId();
+        if (id == R.id.menuHomePageU) {
+            Intent go = new Intent(getApplicationContext(), ShowItems.class);
+            startActivity(go);
+        }
+        else if (id == R.id.menuCartu) {
+            Intent go = new Intent(getApplicationContext(), CartActivity.class);
+            startActivity(go);
+        }
+        else if (id == R.id.menuHPersonu) {
+            Intent go = new Intent(getApplicationContext(), UpdateUserActivity.class);
+            startActivity(go);
+        }
+        else if (id == R.id.menuLogOutu) {
+            AuthenticationService.getInstance().signOut();
+            Intent go = new Intent(getApplicationContext(), MainActivity.class);
+            startActivity(go);
+        }
+        return true;
+    }
+
 }

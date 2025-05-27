@@ -56,18 +56,19 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
         });
 
         holder.btnPlus.setOnClickListener(v -> {
-            itemCart.setAmount(itemCart.getAmount() + 1);
-            cart.updateItemCart(itemCart);
-            notifyDataSetChanged();
-            ((CartActivity) context).goUpdateCart(cart);
+
+            if(itemCart.getAmount() <3) {
+                itemCart.setAmount(itemCart.getAmount() + 1);
+                cart.updateItemCart(itemCart);
+                notifyDataSetChanged();
+                ((CartActivity) context).goUpdateCart(cart);
+            }
         });
 
         holder.btnMinnus.setOnClickListener(v -> {
             if (itemCart.getAmount() > 1) {
                 itemCart.setAmount(itemCart.getAmount() - 1);
                 cart.updateItemCart(itemCart);
-            } else {
-                cart.delItemFromCart(itemCart);
             }
             notifyDataSetChanged();
             ((CartActivity) context).goUpdateCart(cart);

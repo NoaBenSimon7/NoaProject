@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+
+    <item
+        android:id="@+id/menuHomePageU"
+        android:title="חנות"
+        app:showAsAction="never"/>
+    <item
+        android:id="@+id/menuCartu"
+        android:title="סל הקניות"
+        app:showAsAction="never"/>
+    <item
+        android:id="@+id/menuHPersonu"
+        android:title="אזור אישי"
+        app:showAsAction="never"/>
+    <item
+        android:id="@+id/menuLogOutu"
+        android:title="התנתקות"
+        app:showAsAction="never"/>
+</menu>

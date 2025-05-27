@@ -2,19 +2,24 @@ package com.example.noaproject.screens;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
 
 import androidx.activity.EdgeToEdge;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.example.noaproject.R;
+import com.example.noaproject.services.AuthenticationService;
+import com.example.noaproject.utils.SharedPreferencesUtil;
+import com.google.firebase.auth.FirebaseAuth;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
-    Button btnReg1, btnLog1;
+    Button btnReg1, btnLog1, btnBio;
 
 
     @Override
@@ -51,7 +56,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             Intent goLog=new Intent(MainActivity.this, Register.class);
             startActivity(goLog);
         }
+        else if(v == btnBio){
+            Intent goLog=new Intent(MainActivity.this, Bio.class);
+            startActivity(goLog);
+        }
 
     }
+
 
 }

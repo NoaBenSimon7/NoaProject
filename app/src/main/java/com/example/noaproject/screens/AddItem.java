@@ -7,6 +7,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Log;
+import android.view.Menu;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -34,8 +35,11 @@ import androidx.core.view.WindowInsetsCompat;
 
 import com.example.noaproject.R;
 import com.example.noaproject.models.Item;
+import com.example.noaproject.models.User;
+import com.example.noaproject.services.AuthenticationService;
 import com.example.noaproject.services.DatabaseService;
 import com.example.noaproject.utils.ImageUtil;
+import com.example.noaproject.utils.SharedPreferencesUtil;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -78,6 +82,9 @@ public class AddItem extends AppCompatActivity implements View.OnClickListener {
     // constant to compare
     // the activity result code
     int SELECT_PICTURE = 200;
+    private User user;
+    private String email;
+    private String password;
 
 
     @Override
@@ -347,6 +354,42 @@ public class AddItem extends AppCompatActivity implements View.OnClickListener {
                 }
             }
         }
+    }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.admin_menu,menu);;
+        user= SharedPreferencesUtil.getUser(this);
+        email=user.getEmail();
+        password=user.getPassword();
+
+        return true;
+    }
+    @Override
+    public boolean onOptionsItemSelected(@NonNull android.view.MenuItem item) {
+        int id = item.getItemId();
+        if (id == R.id.menuHomePage) {
+            Intent go = new Intent(getApplicationContext(), ShowItems.class);
+            startActivity(go);
+        }
+
+        else if (id == R.id.menuLogOut) {
+            AuthenticationService.getInstance().signOut();
+            Intent go = new Intent(getApplicationContext(), MainActivity.class);
+            startActivity(go);
+        }
+        else if (id == R.id.menuSearchUser) {
+            Intent go = new Intent(getApplicationContext(), SearchUsers.class);
+            startActivity(go);
+        }
+        else if (id == R.id.menuAddProduct) {
+            Intent go = new Intent(getApplicationContext(), AddItem.class);
+            startActivity(go);
+        }
+        else if (id == R.id.menuAllOrders) {
+            Intent go = new Intent(getApplicationContext(), AllOrders.class);
+            startActivity(go);
+        }
+        return true;
     }
 
 

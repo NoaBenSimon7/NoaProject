@@ -18,6 +18,11 @@ import com.example.noaproject.R;
 import com.example.noaproject.models.User;
 import com.example.noaproject.services.AuthenticationService;
 import com.example.noaproject.utils.SharedPreferencesUtil;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class Login extends AppCompatActivity implements View.OnClickListener {
     private static final String TAG = "Login";
@@ -25,8 +30,6 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
     Button btnLog;
     String email, pass;
     AuthenticationService authenticationService;
-
-    User user = new User();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,19 +42,15 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
             return insets;
         });
 
-        // get the instance of the authentication service
         authenticationService = AuthenticationService.getInstance();
 
         initViews();
 
-        // Retrieve the user data from SharedPreferences
-        user = SharedPreferencesUtil.getUser(this);
-        if (user != null) {
-            // Populate the email and password fields with the current user data
-            etEmail.setText(user.getEmail());
-            etPassword.setText(user.getPassword());
+        // Optionally auto-fill email field (not password, for security)
+        User savedUser = SharedPreferencesUtil.getUser(this);
+        if (savedUser != null) {
+            etEmail.setText(savedUser.getEmail());
         }
-
     }
 
     private void initViews() {
@@ -66,26 +65,45 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
         email = etEmail.getText().toString();
         pass = etPassword.getText().toString();
 
-        // Check if the login is for the admin user
-        if (email.equals("admin@gmail.com") && pass.equals("1111")) {
-            // If it's the admin, navigate directly to AdminPage
-            Intent intent = new Intent(Login.this, AdminPage.class);
-            startActivity(intent);
-            return;  // Don't proceed with Firebase login
-        }
 
-        // If it's not admin, proceed with Firebase login
+        // Firebase login
         authenticationService.signIn(email, pass, new AuthenticationService.AuthCallback<String>() {
+
+
             @Override
-            public void onCompleted(String id) {
+            public void onCompleted(String userId) {
                 Log.d(TAG, "signInWithEmail: success");
-                Intent go = new Intent(getApplicationContext(), AfterLogin.class);
-                startActivity(go);
+                if (email.equals("admin@gmail.com") && pass.equals("admin1111")) {
+                    startActivity(new Intent(Login.this, AdminPage.class));
+
+                }
+
+                // Load full user from Firebase and save locally
+                DatabaseReference userRef = FirebaseDatabase.getInstance().getReference("Users").child(userId);
+                userRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot snapshot) {
+                        User user = snapshot.getValue(User.class);
+                        if (user != null) {
+                            SharedPreferencesUtil.saveUser(Login.this, user); // Admin login shortcut
+
+
+                            Intent go = new Intent(Login.this, AfterLogin.class);
+                            startActivity(go);
+                        } else {
+                            Toast.makeText(Login.this, "User not found in database", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError error) {
+                        Toast.makeText(Login.this, "Database error: " + error.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                });
             }
 
             @Override
             public void onFailed(Exception e) {
-                // If sign in fails, display a message to the user.
                 Log.w(TAG, "signInWithEmail: failure", e);
                 Toast.makeText(getApplicationContext(), "Authentication failed: " + e.getMessage(),
                         Toast.LENGTH_SHORT).show();

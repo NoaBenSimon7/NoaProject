@@ -28,11 +28,57 @@
         android:layout_height="0dp"
         android:layout_marginStart="1dp"
         android:layout_marginEnd="1dp"
-        android:layout_marginBottom="97dp"
+        android:layout_marginBottom="96dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView4" />
+
+    <LinearLayout
+        android:id="@+id/linearLayout4"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="84dp"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toTopOf="@+id/rcCart"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/btnOrder"
+        android:layout_width="169dp"
+        android:layout_height="64dp"
+        android:layout_marginTop="21dp"
+        android:layout_marginEnd="21dp"
+        android:layout_marginBottom="25dp"
+        android:backgroundTint="#e0cba8"
+        android:text="הזמנה"
+        android:textColor="#FFFFFF"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/btnBackFcart"
+        app:layout_constraintTop_toBottomOf="@+id/rcCart"
+        app:layout_constraintVertical_bias="1.0" />
+
+    <Button
+        android:id="@+id/btnBackFcart"
+        android:layout_width="176dp"
+        android:layout_height="61dp"
+        android:layout_marginStart="11dp"
+        android:layout_marginEnd="7dp"
+        android:layout_marginBottom="31dp"
+        android:backgroundTint="#e0cba8"
+        android:text="חזור"
+        android:textColor="#FFFFFF"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/btnOrder"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/rcCart" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

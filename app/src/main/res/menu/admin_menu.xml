@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+
+
+        <item
+            android:id="@+id/menuSearchUser"
+            android:title="חיפוש משתמש"
+            app:showAsAction="never"/>
+        <item
+            android:id="@+id/menuAddProduct"
+            android:title="הוספת מוצר"
+            app:showAsAction="never"/>
+        <item
+            android:id="@+id/menuAllOrders"
+            android:title="כל ההזמנות"
+            app:showAsAction="never"/>
+
+    <item
+        android:id="@+id/menuHomePage"
+        android:title="חנות"
+        app:showAsAction="never"/>
+
+    <item
+        android:id="@+id/menuLogOut"
+        android:title="התנתקות"
+        app:showAsAction="never"/>
+
+</menu>

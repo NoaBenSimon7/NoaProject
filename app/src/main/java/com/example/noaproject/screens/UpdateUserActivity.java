@@ -1,10 +1,14 @@
 package com.example.noaproject.screens;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import com.example.noaproject.R;
 import com.example.noaproject.models.Item;
@@ -12,6 +16,7 @@ import com.example.noaproject.models.User;
 import com.example.noaproject.services.AuthenticationService;
 import com.example.noaproject.services.DatabaseService;
 import com.example.noaproject.utils.SharedPreferencesUtil;
+import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.List;
 
@@ -24,6 +29,7 @@ public class UpdateUserActivity extends AppCompatActivity {
 
     DatabaseService databaseService;
     private String uid;
+    private FirebaseAuth mAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,6 +64,7 @@ public class UpdateUserActivity extends AppCompatActivity {
 
             }
         });
+        mAuth= FirebaseAuth.getInstance();
 
 
 
@@ -123,5 +130,37 @@ public class UpdateUserActivity extends AppCompatActivity {
             }
         });
 
+    }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.main_menu,menu);
+        return true;
+    }
+
+    @Override
+    public void onPointerCaptureChanged(boolean hasCapture) {
+        super.onPointerCaptureChanged(hasCapture);
+    }
+    @Override
+    public boolean onOptionsItemSelected(@NonNull android.view.MenuItem item) {
+        int id = item.getItemId();
+        if (id == R.id.menuHomePageU) {
+            Intent go = new Intent(getApplicationContext(), ShowItems.class);
+            startActivity(go);
+        }
+        else if (id == R.id.menuCartu) {
+            Intent go = new Intent(getApplicationContext(), CartActivity.class);
+            startActivity(go);
+        }
+        else if (id == R.id.menuHPersonu) {
+            Intent go = new Intent(getApplicationContext(), UpdateUserActivity.class);
+            startActivity(go);
+        }
+        else if (id == R.id.menuLogOutu) {
+            AuthenticationService.getInstance().signOut();
+            Intent go = new Intent(getApplicationContext(), MainActivity.class);
+            startActivity(go);
+        }
+        return true;
     }
 }

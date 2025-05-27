@@ -326,6 +326,46 @@ public class DatabaseService {
     }
 
 
+    public void getUserOrders(@NotNull final String uid,   @NotNull final DatabaseCallback<List<Order>> callback) {
+        readData("UserOrders/" + uid).get().addOnCompleteListener(task -> {
+            if (!task.isSuccessful()) {
+                Log.e(TAG, "Error getting data", task.getException());
+                callback.onFailed(task.getException());
+                return;
+            }
+            List<Order> orders = new ArrayList<>();
+            task.getResult().getChildren().forEach(dataSnapshot -> {
+                Order order = dataSnapshot.getValue(Order.class);
+                Log.d(TAG, "Got user: " + order);
+                orders.add(order);
+            });
+
+            callback.onCompleted(orders);
+        });
+    }
+
+
+    public void getAllOrders(@NotNull final DatabaseCallback<List<Order>> callback) {
+        readData("Orders").get().addOnCompleteListener(task -> {
+            if (!task.isSuccessful()) {
+                Log.e(TAG, "Error getting data", task.getException());
+                callback.onFailed(task.getException());
+                return;
+            }
+            List<Order> orders = new ArrayList<>();
+            task.getResult().getChildren().forEach(dataSnapshot -> {
+                Order order = dataSnapshot.getValue(Order.class);
+                Log.d(TAG, "Got user: " + order);
+                orders.add(order);
+            });
+
+            callback.onCompleted(orders);
+        });
+    }
+
+
+
+
 
 
 

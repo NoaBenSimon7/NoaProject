@@ -51,7 +51,7 @@
             android:layout_marginEnd="49dp"
             android:layout_marginBottom="24dp"
             android:backgroundTint="#d8c6b6"
-            android:text="דף ראשי"
+            android:text="חנות"
             android:textSize="20sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toTopOf="@+id/btnAddItem"

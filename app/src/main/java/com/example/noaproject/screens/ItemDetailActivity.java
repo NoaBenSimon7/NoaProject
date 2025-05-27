@@ -1,6 +1,8 @@
 package com.example.noaproject.screens;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -12,6 +14,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
@@ -25,19 +28,20 @@ import com.example.noaproject.models.User;
 import com.example.noaproject.services.AuthenticationService;
 import com.example.noaproject.services.DatabaseService;
 import com.example.noaproject.utils.ImageUtil;
+import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class ItemDetailActivity extends AppCompatActivity implements View.OnClickListener {
 
-    private TextView itemName, itemType,   itemFabric, itemDesc, itemPrice;
+    private TextView itemName, itemType, itemFabric, itemDesc, itemPrice;
     private ImageView itemImage;
     Spinner spColor, spSize;
     String color, size;
     ArrayList<String> arrColor, arrSizes;
     ArrayAdapter<String> adapterC, adapterS;
-    Button  btnAddToCart;
+    Button btnAddToCart;
 
 
     private Cart cart;
@@ -45,15 +49,15 @@ public class ItemDetailActivity extends AppCompatActivity implements View.OnClic
     private TextView totalPriceText;
     DatabaseService databaseService;
     AuthenticationService authenticationService;
-    User user=null;
+    User user = null;
 
-    String uid="";
-    private int amont=1;
+    String uid = "";
+    private int amont = 1;
 
     ImageButton btnPlus, btnMinus;
     TextView tvAmount;
     private Item item;
-
+    private FirebaseAuth mAuth;
 
 
     @Override
@@ -62,18 +66,18 @@ public class ItemDetailActivity extends AppCompatActivity implements View.OnClic
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_item_detail);
 
-        databaseService=DatabaseService.getInstance();
+        databaseService = DatabaseService.getInstance();
 
 
-        authenticationService= AuthenticationService.getInstance();
-        uid=authenticationService.getCurrentUserId();
+        authenticationService = AuthenticationService.getInstance();
+        uid = authenticationService.getCurrentUserId();
 
 
         fetchCartFromFirebase();
 
 
-        arrColor=new ArrayList<>();
-        arrSizes=new ArrayList<>();
+        arrColor = new ArrayList<>();
+        arrSizes = new ArrayList<>();
 
         // Initialize views
         itemName = findViewById(R.id.item_name);
@@ -84,19 +88,20 @@ public class ItemDetailActivity extends AppCompatActivity implements View.OnClic
         itemDesc = findViewById(R.id.item_desc);
         itemPrice = findViewById(R.id.item_price);
         itemImage = findViewById(R.id.item_image);
-        tvAmount=findViewById(R.id.tvAmont);
+        tvAmount = findViewById(R.id.tvAmont);
+        tvAmount.setText("1");
 
-        btnAddToCart=findViewById(R.id.btnAddToCart);
+        btnAddToCart = findViewById(R.id.btnAddToCart);
         btnAddToCart.setOnClickListener(this);
-        totalPriceText=findViewById(R.id.item_price);
-        btnMinus=findViewById(R.id.imbMinus);
+        totalPriceText = findViewById(R.id.item_price);
+        btnMinus = findViewById(R.id.imbMinus);
         btnMinus.setOnClickListener(this);
-        btnPlus=findViewById(R.id.imbPlus);
+        btnPlus = findViewById(R.id.imbPlus);
 
         btnPlus.setOnClickListener(this);
 
         // Get the item passed from the intent
-      item = (Item) getIntent().getSerializableExtra("item");
+        item = (Item) getIntent().getSerializableExtra("item");
 
         if (item != null) {
 
@@ -106,20 +111,16 @@ public class ItemDetailActivity extends AppCompatActivity implements View.OnClic
             itemType.setText(item.getType());
 
 
-
-
-
             String colorString = item.getColor();
             if (colorString.contains(",")) {
-                String[] colorArray = colorString.split("," );  // Split by commas
+                String[] colorArray = colorString.split(",");  // Split by commas
 
                 for (String c : colorArray) {
                     arrColor.add(c.trim());  // Convert each part to an integer and add to the list
                 }
-            }
-            else arrColor.add(colorString);
+            } else arrColor.add(colorString);
 
-            adapterC=new ArrayAdapter<>(this, android.R.layout.simple_spinner_item,arrColor);
+            adapterC = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, arrColor);
             spColor.setAdapter(adapterC);
 
 
@@ -132,17 +133,13 @@ public class ItemDetailActivity extends AppCompatActivity implements View.OnClic
                 }
             }
             arrSizes.add(sizeString);
-            adapterS=new ArrayAdapter<>(this, android.R.layout.simple_spinner_item,arrSizes);
+            adapterS = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, arrSizes);
             spSize.setAdapter(adapterS);
-
 
 
             itemFabric.setText(item.getFabric());
             itemDesc.setText(item.getDesc());
-            itemPrice.setText(String.valueOf(item.getPrice())+"");
-
-
-
+            itemPrice.setText(String.valueOf(item.getPrice()) + "");
 
 
             // Load image (you can use a library like Glide or Picasso to load images)
@@ -157,18 +154,22 @@ public class ItemDetailActivity extends AppCompatActivity implements View.OnClic
             @Override
             public void onCompleted(Cart cart2) {
 
-                cart=cart2;
-                if(cart==null)
-                {   cart=new Cart();}
+                cart = cart2;
+                if (cart == null) {
+                    cart = new Cart();
+                }
 
 
             }
 
             @Override
             public void onFailed(Exception e) {
-              cart=new Cart();
+                cart = new Cart();
             }
         });
+
+        mAuth= FirebaseAuth.getInstance();
+
 
     }
 
@@ -179,7 +180,7 @@ public class ItemDetailActivity extends AppCompatActivity implements View.OnClic
 
         cart.addItemToCart(itemCart);
 
-        Toast.makeText(ItemDetailActivity.this, cart.getItems().toString()+"  ", Toast.LENGTH_SHORT).show();
+        Toast.makeText(ItemDetailActivity.this, cart.getItems().toString() + "  ", Toast.LENGTH_SHORT).show();
 
 
         databaseService.updateCart(cart, uid, new DatabaseService.DatabaseCallback<Void>() {
@@ -202,38 +203,76 @@ public class ItemDetailActivity extends AppCompatActivity implements View.OnClic
     private void updateTotalPrice() {
         double totalPrice = 0;
         for (ItemCart item : this.cart.getItems()) {
-            totalPrice += item.getItem().getPrice()*amont;
+            totalPrice += item.getItem().getPrice() * amont;
         }
         totalPriceText.setText("סך הכל: ₪" + totalPrice);
     }
 
     @Override
     public void onClick(View v) {
+        amont= Integer.parseInt(tvAmount.getText().toString());
 
+        if (v == btnAddToCart) {
 
-        if(v==btnAddToCart) {
-
-            ItemCart itemCart=new ItemCart( item,amont);
+            ItemCart itemCart = new ItemCart(item, amont);
 
 
             addItemToCart(itemCart);
         }
-        if(v==btnPlus){
+        if (v == btnPlus) {
 
-            amont++;
-            tvAmount.setText(amont+"");
 
+            if (amont < 3) {
+                amont++;
+                tvAmount.setText(amont + "");
+
+
+            }
+        }
+            if (v == btnMinus) {
+                if (amont > 1) {
+                    amont--;
+                    tvAmount.setText(amont + "");
+                }
+
+            }
 
         }
-        if(v==btnMinus){
-            amont--;
-            tvAmount.setText(amont+"");
-
-
-        }
-
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.main_menu,menu);
+        return true;
     }
-}
+
+    @Override
+    public void onPointerCaptureChanged(boolean hasCapture) {
+        super.onPointerCaptureChanged(hasCapture);
+    }
+    @Override
+    public boolean onOptionsItemSelected(@NonNull android.view.MenuItem item) {
+        int id = item.getItemId();
+        if (id == R.id.menuHomePageU) {
+            Intent go = new Intent(getApplicationContext(), ShowItems.class);
+            startActivity(go);
+        }
+        else if (id == R.id.menuCartu) {
+            Intent go = new Intent(getApplicationContext(), CartActivity.class);
+            startActivity(go);
+        }
+        else if (id == R.id.menuHPersonu) {
+            Intent go = new Intent(getApplicationContext(), UpdateUserActivity.class);
+            startActivity(go);
+        }
+        else if (id == R.id.menuLogOutu) {
+            AuthenticationService.getInstance().signOut();
+            Intent go = new Intent(getApplicationContext(), MainActivity.class);
+            startActivity(go);
+        }
+        return true;
+    }
+    }
+    
+
 
 
 

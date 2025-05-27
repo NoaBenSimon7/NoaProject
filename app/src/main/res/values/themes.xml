@@ -4,6 +4,5 @@
         <!-- Customize your light theme here. -->
         <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
     </style>
-
-    <style name="Theme.NoaProject" parent="Base.Theme.NoaProject" />
+    <style name="Theme.NoaProject" parent="Theme.AppCompat.Light.DarkActionBar" />
 </resources>

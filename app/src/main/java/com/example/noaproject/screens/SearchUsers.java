@@ -1,6 +1,8 @@
 package com.example.noaproject.screens;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -15,6 +17,9 @@ import androidx.core.view.WindowInsetsCompat;
 
 import com.example.noaproject.R;
 import com.example.noaproject.models.User;
+import com.example.noaproject.services.AuthenticationService;
+import com.example.noaproject.utils.SharedPreferencesUtil;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -30,6 +35,11 @@ public class SearchUsers extends AppCompatActivity {
     private ArrayList<String> userList;
     private DatabaseReference usersRef;
     private SearchView searchView;
+    private User user;
+    private String email;
+    private String password;
+    private FirebaseAuth mAuth;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -66,6 +76,8 @@ public class SearchUsers extends AppCompatActivity {
                 return false;
             }
         });
+        mAuth= FirebaseAuth.getInstance();
+
 
         // Fetch users from Firebase
         fetchUsersFromFirebase();
@@ -114,5 +126,40 @@ public class SearchUsers extends AppCompatActivity {
                 Toast.makeText(SearchUsers.this, "Failed to load users. Error: " + error.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
+    }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.admin_menu,menu);;
+        user= SharedPreferencesUtil.getUser(this);
+        email=user.getEmail();
+        password=user.getPassword();
+
+        return true;
+    }
+    @Override
+    public boolean onOptionsItemSelected(@NonNull android.view.MenuItem item) {
+        int id = item.getItemId();
+        if (id == R.id.menuHomePage) {
+            Intent go = new Intent(getApplicationContext(), ShowItems.class);
+            startActivity(go);
+        }
+        else if (id == R.id.menuLogOut) {
+            AuthenticationService.getInstance().signOut();
+            Intent go = new Intent(getApplicationContext(), MainActivity.class);
+            startActivity(go);
+        }
+        else if (id == R.id.menuSearchUser) {
+            Intent go = new Intent(getApplicationContext(), SearchUsers.class);
+            startActivity(go);
+        }
+        else if (id == R.id.menuAddProduct) {
+            Intent go = new Intent(getApplicationContext(), AddItem.class);
+            startActivity(go);
+        }
+        else if (id == R.id.menuAllOrders) {
+            Intent go = new Intent(getApplicationContext(), AllOrders.class);
+            startActivity(go);
+        }
+        return true;
     }
 }
