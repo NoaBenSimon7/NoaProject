@@ -39,9 +39,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private void initViews() {
         btnLog1 = findViewById(R.id.btnLog);
         btnReg1=  findViewById(R.id.btnReg);
+        btnBio = findViewById(R.id.btnBio);
 
         btnReg1.setOnClickListener(this);
         btnLog1.setOnClickListener(this);
+        btnBio.setOnClickListener(this);
 
     }
 

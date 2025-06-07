@@ -121,12 +121,11 @@
         app:layout_constraintStart_toStartOf="@+id/item_fabric"
         app:layout_constraintTop_toBottomOf="@+id/item_fabric">
 
-        <ImageButton
+        <Button
             android:id="@+id/imbPlus"
             android:layout_width="30dp"
             android:layout_height="match_parent"
-
-            android:src="@drawable/picminusss" />
+            android:text="+" />
 
         <TextView
             android:id="@+id/tvAmont"
@@ -135,11 +134,11 @@
             android:layout_gravity="center"
             android:text="0" />
 
-        <ImageButton
+        <Button
             android:id="@+id/imbMinus"
             android:layout_width="30dp"
             android:layout_height="match_parent"
-            android:src="@drawable/picplus" />
+            android:text="-" />
     </LinearLayout>
 
     <Button

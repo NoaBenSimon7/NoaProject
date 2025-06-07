@@ -54,7 +54,7 @@ public class ItemDetailActivity extends AppCompatActivity implements View.OnClic
     String uid = "";
     private int amont = 1;
 
-    ImageButton btnPlus, btnMinus;
+    Button btnPlus, btnMinus;
     TextView tvAmount;
     private Item item;
     private FirebaseAuth mAuth;
