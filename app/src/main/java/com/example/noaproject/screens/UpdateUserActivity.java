@@ -152,8 +152,9 @@ public class UpdateUserActivity extends AppCompatActivity {
             Intent go = new Intent(getApplicationContext(), CartActivity.class);
             startActivity(go);
         }
-        else if (id == R.id.menuHPersonu) {
-            Intent go = new Intent(getApplicationContext(), UpdateUserActivity.class);
+        else if (id == R.id.menuUserOrdersu) {
+            AuthenticationService.getInstance().signOut();
+            Intent go = new Intent(getApplicationContext(), UserOrders.class);
             startActivity(go);
         }
         else if (id == R.id.menuLogOutu) {

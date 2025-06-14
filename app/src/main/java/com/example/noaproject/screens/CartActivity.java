@@ -175,12 +175,12 @@ public class CartActivity extends AppCompatActivity implements View.OnClickListe
             Intent go = new Intent(getApplicationContext(), ShowItems.class);
             startActivity(go);
         }
-        else if (id == R.id.menuCartu) {
-            Intent go = new Intent(getApplicationContext(), CartActivity.class);
-            startActivity(go);
-        }
         else if (id == R.id.menuHPersonu) {
             Intent go = new Intent(getApplicationContext(), UpdateUserActivity.class);
+            startActivity(go);
+        }
+        else if (id == R.id.menuUserOrdersu) {
+            Intent go = new Intent(getApplicationContext(), UserOrders.class);
             startActivity(go);
         }
         else if (id == R.id.menuLogOutu) {

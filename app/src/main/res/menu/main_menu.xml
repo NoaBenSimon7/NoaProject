@@ -16,6 +16,10 @@
         android:title="אזור אישי"
         app:showAsAction="never"/>
     <item
+        android:id="@+id/menuUserOrdersu"
+        android:title="ההזמנות שלי"
+        app:showAsAction="never"/>
+    <item
         android:id="@+id/menuLogOutu"
         android:title="התנתקות"
         app:showAsAction="never"/>

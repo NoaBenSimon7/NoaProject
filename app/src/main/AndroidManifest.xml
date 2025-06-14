@@ -12,6 +12,8 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.NoaProject"
         tools:targetApi="31">
+        <activity android:name=".screens.UserOrders"
+            android:exported="false" />
         <activity
             android:name=".screens.Bio"
             android:exported="false" />

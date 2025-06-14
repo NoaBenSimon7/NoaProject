@@ -24,7 +24,7 @@ public class AfterLogin extends AppCompatActivity implements View.OnClickListene
 
 
     TextView tvHello;
-    Button btnGoStore2, btnGoAddItem2, btnGoWishList, btnGoPersonal, btnGoDonation;
+    Button btnGoStore2, btnGoAddItem2, btnGoWishList, btnGoPersonal, btnGoDonation, btnMyOrder;
     private FirebaseAuth mAuth;
     private User user;
     String email;
@@ -41,14 +41,14 @@ public class AfterLogin extends AppCompatActivity implements View.OnClickListene
         btnGoStore2=findViewById(R.id.btnGoStore2);
         btnGoWishList=findViewById(R.id.btnGoMyCart);
         btnGoPersonal=findViewById(R.id.btnGoPersonal);
+        btnMyOrder = findViewById(R.id.btnMyOrder);
 
-        //   if(Login.theUser != null)
-        //     tvHello.setText(" שלום "+Login.theUser.getfName());
 
         btnGoStore2.setOnClickListener(this);
-
         btnGoWishList.setOnClickListener(this);
         btnGoPersonal.setOnClickListener(this);
+        btnMyOrder.setOnClickListener(this);
+
 
         startService(new Intent(this, MyService.class));
 
@@ -75,6 +75,10 @@ public class AfterLogin extends AppCompatActivity implements View.OnClickListene
         }
         if(v==btnGoWishList){
             Intent personal=new Intent(this, CartActivity.class);
+            startActivity(personal);
+        }
+        if(v==btnMyOrder){
+            Intent personal=new Intent(this, UserOrders.class);
             startActivity(personal);
         }
 

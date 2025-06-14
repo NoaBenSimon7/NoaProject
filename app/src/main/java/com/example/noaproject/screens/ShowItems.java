@@ -187,15 +187,15 @@ public class ShowItems extends AppCompatActivity implements View.OnClickListener
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         int id = item.getItemId();
-        if (id == R.id.menuHomePageU) {
-            Intent go = new Intent(getApplicationContext(), ShowItems.class);
-            startActivity(go);
-        } else if (id == R.id.menuCartu) {
+        if (id == R.id.menuCartu) {
             Intent go = new Intent(getApplicationContext(), CartActivity.class);
             startActivity(go);
         } else if (id == R.id.menuHPersonu) {
             Intent go = new Intent(getApplicationContext(), UpdateUserActivity.class);
             startActivity(go);
+        } else if (id == R.id.menuUserOrdersu) {
+        Intent go = new Intent(getApplicationContext(), UserOrders.class);
+        startActivity(go);
         } else if (id == R.id.menuLogOutu) {
             AuthenticationService.getInstance().signOut();
             Intent go = new Intent(getApplicationContext(), MainActivity.class);

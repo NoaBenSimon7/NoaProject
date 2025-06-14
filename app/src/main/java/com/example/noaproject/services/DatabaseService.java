@@ -272,9 +272,7 @@ public class DatabaseService {
     /// @see Item
     public void createNewOreder(@NotNull final Order order, @Nullable final DatabaseCallback<Void> callback) {
         writeData("Orders/" + order.getOrderId(), order, callback);
-        writeData("UserOrders/" +order.getUser().getId()+"/"+ order.getOrderId(), order, callback);
-
-    }
+        writeData("UserOrders/" +order.getUser().getId()+"/"+ order.getOrderId(), order, callback);    }
 
 
 

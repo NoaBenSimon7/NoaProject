@@ -1,8 +1,11 @@
 package com.example.noaproject.screens;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
 
 import androidx.activity.EdgeToEdge;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
@@ -16,6 +19,7 @@ import com.example.noaproject.adapters.OrderAdapter;
 import com.example.noaproject.models.Order;
 import com.example.noaproject.services.AuthenticationService;
 import com.example.noaproject.services.DatabaseService;
+import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,6 +32,7 @@ public class UserOrders extends AppCompatActivity {
     DatabaseService databaseService;
 
     String uid;
+    private FirebaseAuth mAuth;
 
 
     @Override
@@ -40,6 +45,8 @@ public class UserOrders extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+        mAuth = FirebaseAuth.getInstance();
+
 
         uid= AuthenticationService.getInstance().getCurrentUserId();
 
@@ -57,7 +64,11 @@ public class UserOrders extends AppCompatActivity {
             @Override
             public void onCompleted(List<Order> object) {
                 orders.clear();
-                orders.addAll(object);
+                for (Order order : object) {
+                    if (order.getUser() != null && order.getUser().getId() != null && order.getUser().getId().equals(uid)) {
+                        orders.add(order);
+                    }
+                }
                 orderAdapter.notifyDataSetChanged();
             }
 
@@ -66,5 +77,38 @@ public class UserOrders extends AppCompatActivity {
 
             }
         });
+    }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.main_menu,menu);
+        return true;
+    }
+
+    @Override
+    public void onPointerCaptureChanged(boolean hasCapture) {
+        super.onPointerCaptureChanged(hasCapture);
+    }
+    @Override
+    public boolean onOptionsItemSelected(@NonNull android.view.MenuItem item) {
+        int id = item.getItemId();
+        if (id == R.id.menuHomePageU) {
+            Intent go = new Intent(getApplicationContext(), ShowItems.class);
+            startActivity(go);
+        }
+        else if (id == R.id.menuCartu) {
+            Intent go = new Intent(getApplicationContext(), CartActivity.class);
+            startActivity(go);
+        }
+        else if (id == R.id.menuHPersonu) {
+            AuthenticationService.getInstance().signOut();
+            Intent go = new Intent(getApplicationContext(), UpdateUserActivity.class);
+            startActivity(go);
+        }
+        else if (id == R.id.menuLogOutu) {
+            AuthenticationService.getInstance().signOut();
+            Intent go = new Intent(getApplicationContext(), MainActivity.class);
+            startActivity(go);
+        }
+        return true;
     }
     }

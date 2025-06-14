@@ -41,8 +41,7 @@ public class ItemDetailActivity extends AppCompatActivity implements View.OnClic
     String color, size;
     ArrayList<String> arrColor, arrSizes;
     ArrayAdapter<String> adapterC, adapterS;
-    Button btnAddToCart;
-
+    Button btnAddToCart, btnBack;
 
     private Cart cart;
 
@@ -59,7 +58,6 @@ public class ItemDetailActivity extends AppCompatActivity implements View.OnClic
     private Item item;
     private FirebaseAuth mAuth;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -67,14 +65,9 @@ public class ItemDetailActivity extends AppCompatActivity implements View.OnClic
         setContentView(R.layout.activity_item_detail);
 
         databaseService = DatabaseService.getInstance();
-
-
         authenticationService = AuthenticationService.getInstance();
         uid = authenticationService.getCurrentUserId();
-
-
         fetchCartFromFirebase();
-
 
         arrColor = new ArrayList<>();
         arrSizes = new ArrayList<>();
@@ -92,74 +85,61 @@ public class ItemDetailActivity extends AppCompatActivity implements View.OnClic
         tvAmount.setText("1");
 
         btnAddToCart = findViewById(R.id.btnAddToCart);
+        btnBack = findViewById(R.id.btnBack);
+        btnBack.setOnClickListener(this);
         btnAddToCart.setOnClickListener(this);
         totalPriceText = findViewById(R.id.item_price);
         btnMinus = findViewById(R.id.imbMinus);
         btnMinus.setOnClickListener(this);
         btnPlus = findViewById(R.id.imbPlus);
-
         btnPlus.setOnClickListener(this);
 
         // Get the item passed from the intent
         item = (Item) getIntent().getSerializableExtra("item");
 
         if (item != null) {
-
             itemImage.setImageBitmap(ImageUtil.convertFrom64base(item.getImageRef()));
-//
             itemName.setText(item.getItemName());
             itemType.setText(item.getType());
 
-
             String colorString = item.getColor();
             if (colorString.contains(",")) {
-                String[] colorArray = colorString.split(",");  // Split by commas
-
+                String[] colorArray = colorString.split(",");
                 for (String c : colorArray) {
-                    arrColor.add(c.trim());  // Convert each part to an integer and add to the list
+                    arrColor.add(c.trim());
                 }
             } else arrColor.add(colorString);
 
             adapterC = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, arrColor);
             spColor.setAdapter(adapterC);
 
-
             String sizeString = item.getSize();
             if (sizeString.contains(",")) {
-                String[] sizeArray = sizeString.split(",");  // Split by commas
-
+                String[] sizeArray = sizeString.split(",");
                 for (String s : sizeArray) {
-                    arrSizes.add(s.trim());  // Convert each part to an integer and add to the list
+                    arrSizes.add(s.trim());
                 }
+            } else {
+                arrSizes.add(sizeString);
             }
-            arrSizes.add(sizeString);
+
             adapterS = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, arrSizes);
             spSize.setAdapter(adapterS);
 
-
             itemFabric.setText(item.getFabric());
             itemDesc.setText(item.getDesc());
-            itemPrice.setText(String.valueOf(item.getPrice()) + "");
-
-
-            // Load image (you can use a library like Glide or Picasso to load images)
-            // Glide.with(this).load(item.getImageRef()).into(itemImage);
+            itemPrice.setText(String.valueOf(item.getPrice()));
         }
     }
 
-
     private void fetchCartFromFirebase() {
-
         databaseService.getCart(uid, new DatabaseService.DatabaseCallback<Cart>() {
             @Override
             public void onCompleted(Cart cart2) {
-
                 cart = cart2;
                 if (cart == null) {
                     cart = new Cart();
                 }
-
-
             }
 
             @Override
@@ -168,38 +148,27 @@ public class ItemDetailActivity extends AppCompatActivity implements View.OnClic
             }
         });
 
-        mAuth= FirebaseAuth.getInstance();
-
-
+        mAuth = FirebaseAuth.getInstance();
     }
 
-
-    // הוספת מוצר לעגלה
     public void addItemToCart(ItemCart itemCart) {
-
-
         cart.addItemToCart(itemCart);
 
         Toast.makeText(ItemDetailActivity.this, cart.getItems().toString() + "  ", Toast.LENGTH_SHORT).show();
 
-
         databaseService.updateCart(cart, uid, new DatabaseService.DatabaseCallback<Void>() {
             @Override
             public void onCompleted(Void object) {
-                updateTotalPrice();  // עדכון המחיר הכולל
-                Toast.makeText(ItemDetailActivity.this, " לעגלה", Toast.LENGTH_SHORT).show();
-
+                updateTotalPrice();
+                Toast.makeText(ItemDetailActivity.this, "המוצר נוסף לעגלה", Toast.LENGTH_SHORT).show();
             }
 
             @Override
             public void onFailed(Exception e) {
-
             }
         });
-
     }
 
-    // עדכון המחיר הכולל בעגלה
     private void updateTotalPrice() {
         double totalPrice = 0;
         for (ItemCart item : this.cart.getItems()) {
@@ -210,37 +179,37 @@ public class ItemDetailActivity extends AppCompatActivity implements View.OnClic
 
     @Override
     public void onClick(View v) {
-        amont= Integer.parseInt(tvAmount.getText().toString());
+        amont = Integer.parseInt(tvAmount.getText().toString());
 
         if (v == btnAddToCart) {
-
             ItemCart itemCart = new ItemCart(item, amont);
-
-
             addItemToCart(itemCart);
         }
+
         if (v == btnPlus) {
-
-
             if (amont < 3) {
                 amont++;
-                tvAmount.setText(amont + "");
-
-
+                tvAmount.setText(String.valueOf(amont));
             }
         }
-            if (v == btnMinus) {
-                if (amont > 1) {
-                    amont--;
-                    tvAmount.setText(amont + "");
-                }
 
+        if (v == btnMinus) {
+            if (amont > 1) {
+                amont--;
+                tvAmount.setText(String.valueOf(amont));
             }
-
         }
+
+        if (v == btnBack) {
+            Intent intent = new Intent(ItemDetailActivity.this, ShowItems.class);
+            startActivity(intent);
+            finish();
+        }
+    }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.main_menu,menu);
+        getMenuInflater().inflate(R.menu.main_menu, menu);
         return true;
     }
 
@@ -248,31 +217,24 @@ public class ItemDetailActivity extends AppCompatActivity implements View.OnClic
     public void onPointerCaptureChanged(boolean hasCapture) {
         super.onPointerCaptureChanged(hasCapture);
     }
+
     @Override
     public boolean onOptionsItemSelected(@NonNull android.view.MenuItem item) {
         int id = item.getItemId();
         if (id == R.id.menuHomePageU) {
             Intent go = new Intent(getApplicationContext(), ShowItems.class);
             startActivity(go);
-        }
-        else if (id == R.id.menuCartu) {
+        } else if (id == R.id.menuCartu) {
             Intent go = new Intent(getApplicationContext(), CartActivity.class);
             startActivity(go);
-        }
-        else if (id == R.id.menuHPersonu) {
+        } else if (id == R.id.menuHPersonu) {
             Intent go = new Intent(getApplicationContext(), UpdateUserActivity.class);
             startActivity(go);
-        }
-        else if (id == R.id.menuLogOutu) {
+        } else if (id == R.id.menuLogOutu) {
             AuthenticationService.getInstance().signOut();
             Intent go = new Intent(getApplicationContext(), MainActivity.class);
             startActivity(go);
         }
         return true;
     }
-    }
-    
-
-
-
-
+}

@@ -2,11 +2,9 @@ package com.example.noaproject.models;
 
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
-import java.util.UUID;
 
 public class Order implements Serializable {
     private String orderId;
@@ -14,7 +12,8 @@ public class Order implements Serializable {
     private double totalPrice;
     private String status;
 
-    private User user;
+    private User user;      // אובייקט המשתמש
+    private String userId;  // מזהה המשתמש בלבד
 
     private long timestamp;
 
@@ -24,18 +23,21 @@ public class Order implements Serializable {
         this.totalPrice = totalPrice;
         this.status = status;
         this.user = user;
+        if (user != null) {
+            this.userId = user.getId();
+        }
         this.timestamp = timestamp;
     }
-
-
 
     public Order() {
     }
 
     private double calculateTotalPrice() {
         double sum = 0;
-        for (ItemCart item : items) {
-            sum += item.getItem().getPrice()*item.getAmount();
+        if (items != null) {
+            for (ItemCart item : items) {
+                sum += item.getItem().getPrice() * item.getAmount();
+            }
         }
         return sum;
     }
@@ -60,7 +62,6 @@ public class Order implements Serializable {
         this.status = status;
     }
 
-
     public void setOrderId(String orderId) {
         this.orderId = orderId;
     }
@@ -79,6 +80,17 @@ public class Order implements Serializable {
 
     public void setUser(User user) {
         this.user = user;
+        if (user != null) {
+            this.userId = user.getId();
+        }
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 
     public long getTimestamp() {
@@ -107,6 +119,7 @@ public class Order implements Serializable {
                 ", totalPrice=" + totalPrice +
                 ", status='" + status + '\'' +
                 ", user=" + user +
+                ", userId='" + userId + '\'' +
                 ", timestamp=" + timestamp +
                 '}';
     }
