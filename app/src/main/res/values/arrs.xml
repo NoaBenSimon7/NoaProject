@@ -2,13 +2,15 @@
 <resources>
 
     <string-array name="typeArr">
-        <item>חולצות טי</item>
-        <item>טופים</item>
-        <item>סווטשירט</item>
-        <item>ג/ינס</item>
+        <item>חולצות</item>
+        <item>גופיות</item>
+        <item>סווטשירטים</item>
         <item>סריגים</item>
+        <item>ג/ינסים</item>
+        <item>מכנסיים</item>
         <item>פיג/מות</item>
-        <item>נעליים</item>
+        <item>שמלות</item>
+        <item>חצאיות</item>
     </string-array>
 
     <string-array name="sizeArr">
@@ -37,7 +39,12 @@
         <item>אפור</item>
         <item>חום</item>
         <item>בז</item>
-        <item>כחול נייבי</item>
+        <item>כחול</item>
+        <item>ירוק</item>
+        <item>אדום</item>
+        <item>צהוב</item>
+        <item>ורוד</item>
+        <item>סגול</item>
     </string-array>
 
 </resources>
